@@ -75,8 +75,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .tile.none{color:var(--gorse)}
 .empty{font-family:var(--print);font-size:15px;padding:20px 10px;
   color:#6B5410;text-align:center}
-.jig{flex:none;font-size:19px;line-height:1;
-  animation:jigdance 1.4s ease-in-out infinite;transform-origin:50% 100%}
+.jig{flex:none;width:44px;height:54px;margin:-8px 0}
 .lag{flex:none;font-size:15px;line-height:1;opacity:.9;
   animation:crawl 7s ease-in-out infinite}
 @keyframes jigdance{
@@ -229,7 +228,7 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent lead">Mark</span><span class="jig" aria-hidden="true">🕺</span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="lag" aria-hidden="true">🐌</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent lead">Mark</span><canvas class="jig" width="132" height="162" aria-hidden="true"></canvas><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="lag" aria-hidden="true">🐌</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
 
 <h2>Every card, round by round</h2>
 <div class="legend">
@@ -259,6 +258,102 @@ footer p+p{margin-top:7px}
   </svg>
 </button>
 <script>
+(function dancer() {
+  const cv = document.querySelector("canvas.jig");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const css = getComputedStyle(document.documentElement);
+  const SLOT = css.getPropertyValue("--slot").trim() || "#16150F";
+  const CREAM = "#F0E8D2", CREAM2 = "#D6CCB1", GOLD = "#E6B31E";
+  const S = 3;                                   // 44x54 CSS px at 3x
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function limb(x, y, a1, l1, a2, l2, w, col) {
+    // two-segment limb: returns joint + end. angles in rad from straight down
+    const jx = x + Math.sin(a1) * l1, jy = y + Math.cos(a1) * l1;
+    const ex = jx + Math.sin(a1 + a2) * l2, ey = jy + Math.cos(a1 + a2) * l2;
+    ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(jx, jy); ctx.lineTo(ex, ey);
+    ctx.stroke();
+    return [ex, ey];
+  }
+
+  function draw(t) {
+    const w = Math.PI * 2 / 1.15;                // one dance beat = 1.15s
+    const ph = t * w;
+    const bounce = 2.6 * Math.abs(Math.sin(ph));
+    const sway = Math.sin(ph) * 0.14;            // torso lean, radians
+    ctx.setTransform(S, 0, 0, S, 0, 0);
+    ctx.clearRect(0, 0, 44, 54);
+
+    // ground shadow breathes with the bounce
+    ctx.fillStyle = SLOT; ctx.globalAlpha = .16;
+    ctx.beginPath();
+    ctx.ellipse(22, 51, 11 - bounce * .8, 1.7, 0, 0, 7);
+    ctx.fill(); ctx.globalAlpha = 1;
+
+    const px = 22, py = 33.5 - bounce;           // pelvis
+
+    // legs: alternating knee-lift steps (far leg shaded)
+    const liftL = Math.max(0, Math.sin(ph)), liftR = Math.max(0, -Math.sin(ph));
+    limb(px - 3, py, -0.55 * liftR, 8.5, 0.9 * liftR, 8.5, 4.6, CREAM2);
+    // knickers over the hips (puffy)
+    ctx.fillStyle = SLOT;
+    ctx.beginPath();
+    ctx.moveTo(px - 6.4, py - 3);
+    ctx.quadraticCurveTo(px, py + 8.5, px + 6.4, py - 3);
+    ctx.closePath(); ctx.fill();
+    limb(px + 3, py, 0.55 * liftL, 8.5, -0.9 * liftL, 8.5, 4.6, CREAM);
+    // brogues
+    ctx.fillStyle = SLOT;
+    for (const sx of [-3.4, 3.4]) {
+      const lift = sx < 0 ? liftR : liftL;
+      ctx.beginPath();
+      ctx.ellipse(px + sx + (sx < 0 ? -1 : 1) * lift * 3,
+                  49.4 - lift * 6 - (sx < 0 ? 0 : bounce * 0),
+                  3, 1.5, 0, 0, 7);
+      ctx.fill();
+    }
+
+    // torso with lean + counter-rotating head
+    ctx.save();
+    ctx.translate(px, py - 2); ctx.rotate(sway);
+    ctx.fillStyle = CREAM;
+    ctx.beginPath();
+    ctx.moveTo(-6, 0); ctx.lineTo(6, 0);
+    ctx.lineTo(4.6, -14); ctx.quadraticCurveTo(0, -15.6, -4.6, -14);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = SLOT;                        // argyle diamond
+    ctx.beginPath();
+    ctx.moveTo(0, -4); ctx.lineTo(2.4, -7.5); ctx.lineTo(0, -11);
+    ctx.lineTo(-2.4, -7.5); ctx.closePath(); ctx.fill();
+
+    // arms: alternating fist pumps with follow-through lag
+    const pump = Math.sin(ph - 0.55);
+    const aL = -2.5 + 0.5 * pump, aR = 2.5 + 0.5 * pump;
+    const [lx, ly] = limb(-5, -12.5, aL, 7, -0.6, 6, 3.8, CREAM2);
+    const [rx, ry] = limb(5, -12.5, aR, 7, 0.6, 6, 3.8, CREAM);
+    ctx.fillStyle = CREAM2; ctx.beginPath(); ctx.arc(lx, ly, 2, 0, 7); ctx.fill();
+    ctx.fillStyle = CREAM;  ctx.beginPath(); ctx.arc(rx, ry, 2, 0, 7); ctx.fill();
+
+    // head, counter-tilted, with the gold flat cap
+    ctx.save();
+    ctx.translate(0, -18); ctx.rotate(-sway * 1.5);
+    ctx.fillStyle = CREAM; ctx.beginPath(); ctx.arc(0, 0, 4.4, 0, 7); ctx.fill();
+    ctx.fillStyle = GOLD;
+    ctx.beginPath(); ctx.arc(0, -1.2, 4.5, Math.PI, 0); ctx.fill();
+    ctx.fillRect(-0.5, -2.4, 7, 1.6);            // brim
+    ctx.restore();
+    ctx.restore();
+  }
+
+  if (reduce) { draw(0.35); return; }
+  (function loop(ts) {
+    if (!document.hidden) draw(ts / 1000);
+    requestAnimationFrame(loop);
+  })(0);
+})();
+
 function go(id) {
   document.getElementById(id).scrollIntoView({behavior: "smooth"});
 }
@@ -282,7 +377,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784234658625;
+const built = 1784234959100;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
