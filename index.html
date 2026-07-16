@@ -50,7 +50,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .boardcap{background:var(--slot);color:var(--board);
   font-weight:800;font-stretch:82%;font-size:15px;letter-spacing:.28em;
   text-transform:uppercase;text-align:center;padding:8px 4px 7px}
-.board{background:var(--board);padding:10px 9px;
+.board{background:var(--board);padding:20px 9px 10px;
   background-image:repeating-linear-gradient(0deg,rgba(60,42,0,.05) 0 1px,transparent 1px 4px),
     linear-gradient(180deg,rgba(255,255,255,.10),transparent 30%);
   box-shadow:0 1px 0 #B98D12 inset,0 6px 18px rgba(22,21,15,.2)}
@@ -94,10 +94,12 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
   transform:translateX(-110%);animation:sheen 3s ease-in-out infinite}
 @keyframes sheen{0%,55%{transform:translateX(-110%)}
   85%,100%{transform:translateX(110%)}}
-.crn{font-size:13px;font-weight:400;margin-right:5px;display:inline-block;
+.pl{position:relative;display:flex;min-width:0}
+.crown{position:absolute;left:0;bottom:calc(100% - 1px);width:100%;height:auto;
+  display:block;pointer-events:none;transform-origin:50% 100%;
   animation:crn 3.4s ease-in-out infinite}
-@keyframes crn{0%,84%,100%{transform:rotate(-9deg) translateY(0)}
-  91%{transform:rotate(-9deg) translateY(-2.5px)}}
+@keyframes crn{0%,84%,100%{transform:translateY(0)}
+  91%{transform:translateY(-2px)}}
 .spk{position:absolute;color:#E6B31E;font-weight:400;pointer-events:none;
   animation:twinkle 1.9s ease-in-out infinite}
 .spk.s1{font-size:11px;left:8px;top:1px}
@@ -105,7 +107,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.5) rotate(0)}
   50%{opacity:1;transform:scale(1) rotate(40deg)}}
 @media (prefers-reduced-motion:reduce){
-  .ent.lead::after,.spk,.crn{animation:none}}
+  .ent.lead::after,.spk,.crown{animation:none}}
 .ent.champ{background:var(--card);color:var(--slot);
   box-shadow:0 0 0 2px var(--slot),0 2px 4px rgba(40,28,0,.45)}
 .bfoot{border-top:1px solid rgba(22,21,15,.15);margin-top:4px;padding:5px 0 2px}
@@ -235,7 +237,7 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent lead"><b class="crn">👑</b>Mark</span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="pl"><svg class="crown" viewBox="0 0 160 16" aria-hidden="true"><path d="M0 16 L0 9.5 L12 5.5 L29 9.5 L46 4 L63 9.5 L80 2 L97 9.5 L114 4 L131 9.5 L148 5.5 L160 9.5 L160 16 Z" fill="var(--slot)"/><rect x="0" y="11.4" width="160" height="1.1" fill="#E6B31E" opacity=".42"/><circle cx="12" cy="5.5" r="1.8" fill="#E6B31E"/><circle cx="46" cy="4" r="1.8" fill="#E6B31E"/><circle cx="80" cy="2" r="2.2" fill="#E6B31E"/><circle cx="114" cy="4" r="1.8" fill="#E6B31E"/><circle cx="148" cy="5.5" r="1.8" fill="#E6B31E"/></svg><span class="ent lead">Mark</span></span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
 
 <h2>Every card, round by round</h2>
 <div class="legend">
@@ -333,27 +335,33 @@ footer p+p{margin-top:7px}
       + '</svg>';
   };
 
+  // Stratified: one balloon per vertical band, jittered inside it, and the
+  // bands are shuffled so launch order doesn't sweep left-to-right. Delays are
+  // spread wide so only a few share the screen at once.
   const N = 13;
+  const bands = [...Array(N).keys()].sort(() => Math.random() - 0.5);
   const carry = [...Array(N).keys()].sort(() => Math.random() - 0.5).slice(0, 4);
+  const hues = HUES.slice().sort(() => Math.random() - 0.5);
   let nth = 0;
   for (let i = 0; i < N; i++) {
     const w = 42 + Math.round(Math.random() * 52);      // 42..94 — size is depth
+    const frac = 0.06 + ((bands[i] + 0.2 + Math.random() * 0.6) / N) * 0.88;
     const d = document.createElement("div");
     d.className = "blo";
-    d.style.left = (i / N * 90 + Math.random() * 6) + "vw";
+    d.style.left = "calc(" + (frac * 100).toFixed(1) + "% - " + Math.round(w / 2) + "px)";
     d.style.width = w + "px";
     d.style.height = (w * 1.66) + "px";
     d.style.zIndex = String(Math.round(w));             // near ones pass in front
-    d.style.animationDelay = (i * 0.24 + Math.random() * 0.6) + "s";
-    d.style.animationDuration = (12 - (w - 42) / 52 * 4.6) + "s";  // near = faster
-    d.innerHTML = shape(i, HUES[i % HUES.length],
+    d.style.animationDelay = ((i / N) * 4.6 + Math.random() * 0.5).toFixed(2) + "s";
+    d.style.animationDuration = (10.6 - (w - 42) / 52 * 3.4).toFixed(2) + "s";
+    d.innerHTML = shape(i, hues[i % hues.length],
                         carry.includes(i) ? names[nth++ % names.length] : "");
     const sv = d.firstChild;
     sv.style.animationDuration = (3.4 + Math.random() * 2.4) + "s";
     sv.style.animationDelay = (-Math.random() * 4) + "s";   // desync the sway
     box.appendChild(d);
   }
-  setTimeout(() => box.remove(), 19000);
+  setTimeout(() => box.remove(), 17500);
 })();
 
 function go(id) {
@@ -388,7 +396,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784237039836;
+const built = 1784237406051;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
