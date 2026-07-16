@@ -352,11 +352,14 @@ footer p+p{margin-top:7px}
   // Stratified: one balloon per vertical band, jittered inside it, and the
   // bands are shuffled so launch order doesn't sweep left-to-right. Delays are
   // spread wide so only a few share the screen at once.
-  const N = 13;
-  const bands = [...Array(N).keys()].sort(() => Math.random() - 0.5);
-  const size = Array.from({length: N}, () => 42 + Math.round(Math.random() * 52));
-  // only the biggest carry words — small ones can't hold a legible line
-  const carry = [...Array(N).keys()].sort((a, z) => size[z] - size[a]).slice(0, 4);
+  // Two tiers. The ones carrying words fly close and big; the plain ones are
+  // distant confetti. The big ones are spread wide in TIME rather than space,
+  // so they stay vertically separated instead of piling up.
+  const N = 13, MSG = 4;
+  const carry = new Set(
+    [...Array(N).keys()].sort(() => Math.random() - 0.5).slice(0, MSG));
+  const bigSlot = [...Array(MSG).keys()].sort(() => Math.random() - 0.5);
+  const smallSlot = [...Array(N - MSG).keys()].sort(() => Math.random() - 0.5);
   const SAY = [
     (n) => [n, "IS THE", "BEST!"],
     (n) => ["GO", n + "!"],
@@ -364,28 +367,39 @@ footer p+p{margin-top:7px}
     (n) => ["TEAM", n],
   ].sort(() => Math.random() - 0.5);
   const hues = HUES.slice().sort(() => Math.random() - 0.5);
-  let nth = 0, mth = 0;
+  let nth = 0, mth = 0, bi = 0, si = 0;
   for (let i = 0; i < N; i++) {
-    const w = size[i];                                  // 42..94 — size is depth
-    const frac = 0.06 + ((bands[i] + 0.2 + Math.random() * 0.6) / N) * 0.88;
+    const big = carry.has(i);
+    const w = big ? 104 + Math.round(Math.random() * 38)    // 104..142 — up close
+                  : 32 + Math.round(Math.random() * 28);    //  32..60  — far off
+    let frac, delay;
+    if (big) {
+      const k = bigSlot[bi++];
+      frac = 0.24 + ((k + 0.15 + Math.random() * 0.7) / MSG) * 0.52;  // stay on screen
+      delay = 0.4 + k * 1.65 + Math.random() * 0.4;                   // well apart
+    } else {
+      const k = smallSlot[si++];
+      frac = 0.04 + ((k + 0.15 + Math.random() * 0.7) / (N - MSG)) * 0.92;
+      delay = (k / (N - MSG)) * 6 + Math.random() * 0.5;
+    }
     const d = document.createElement("div");
     d.className = "blo";
     d.style.left = "calc(" + (frac * 100).toFixed(1) + "% - " + Math.round(w / 2) + "px)";
     d.style.width = w + "px";
     d.style.height = (w * 1.66) + "px";
     d.style.zIndex = String(Math.round(w));             // near ones pass in front
-    d.style.animationDelay = ((i / N) * 4.6 + Math.random() * 0.5).toFixed(2) + "s";
-    d.style.animationDuration = (10.6 - (w - 42) / 52 * 3.4).toFixed(2) + "s";
+    d.style.animationDelay = delay.toFixed(2) + "s";
+    d.style.animationDuration = (big ? 7.2 + Math.random() * 1.4
+                                     : 10.5 + Math.random() * 2).toFixed(2) + "s";
     d.innerHTML = shape(i, hues[i % hues.length],
-                        carry.includes(i)
-                          ? SAY[mth++ % SAY.length](names[nth++ % names.length])
-                          : []);
+                        big ? SAY[mth++ % SAY.length](names[nth++ % names.length])
+                            : []);
     const sv = d.firstChild;
     sv.style.animationDuration = (3.4 + Math.random() * 2.4) + "s";
     sv.style.animationDelay = (-Math.random() * 4) + "s";   // desync the sway
     box.appendChild(d);
   }
-  setTimeout(() => box.remove(), 17500);
+  setTimeout(() => box.remove(), 20000);
 })();
 
 function go(id) {
@@ -420,7 +434,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784239173435;
+const built = 1784239577181;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
