@@ -92,19 +92,23 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .ln{display:block;white-space:nowrap}
 .say{--tilt:-2deg;position:relative;display:inline-block;text-align:center;
   font-family:var(--gothic);font-weight:900;font-stretch:76%;
-  font-size:21px;letter-spacing:.005em;line-height:1.05;
+  font-size:21px;letter-spacing:.07em;line-height:1.08;
   text-transform:uppercase;margin-bottom:26px;
   transform:scale(0);opacity:0}
 .say.show{animation:popin .62s cubic-bezier(.2,1.4,.5,1) forwards}
+/* NOTE: these must use background-image, never the `background` shorthand —
+   the shorthand resets background-clip back to border-box and the gradient
+   then paints the whole box instead of the letters (a solid bar). */
 .say-o{display:block;color:#2A1505;white-space:nowrap;
-  -webkit-text-stroke:7px #2A1505;
+  -webkit-text-stroke:5px #2A1505;
   filter:drop-shadow(0 3px 0 #1B0D02) drop-shadow(0 6px 9px rgba(0,0,0,.5))}
 .say-f{position:absolute;left:0;top:0;right:0;
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  background:linear-gradient(180deg,#FFF7C8 0%,#FFD84E 46%,#F0940F 100%)}
+  color:transparent;
+  background-image:linear-gradient(180deg,#FFF7C8 0%,#FFD84E 46%,#F0940F 100%);
+  -webkit-background-clip:text;background-clip:text}
 /* the closer you are, the kinder the colour */
-.say.t1 .say-f{background:linear-gradient(180deg,#FFE2B0 0%,#FF9F3C 48%,#E4600A 100%)}
-.say.t2 .say-f{background:linear-gradient(180deg,#FFC9C0 0%,#FF5C48 46%,#B4180A 100%)}
+.say.t1 .say-f{background-image:linear-gradient(180deg,#FFE2B0 0%,#FF9F3C 48%,#E4600A 100%)}
+.say.t2 .say-f{background-image:linear-gradient(180deg,#FFC9C0 0%,#FF5C48 46%,#B4180A 100%)}
 @keyframes popin{
   0%{transform:scale(0) rotate(-14deg);opacity:0}
   50%{transform:scale(1.22) rotate(4deg);opacity:1}
@@ -676,7 +680,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784244218008;
+const built = 1784244487118;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
