@@ -36,6 +36,9 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
   font-size:clamp(38px,13vw,54px);line-height:.88;letter-spacing:-.01em;
   text-transform:uppercase;margin:4px 0 8px}
 .meta{font-family:var(--print);font-size:14px;color:var(--gorse)}
+.upd{font-family:var(--print);font-size:13px;font-style:italic;
+  color:var(--gorse);margin-top:6px}
+.upd #upd-ago{opacity:.75}
 
 /* ---------- the board (the one loud thing) ---------- */
 .board{background:var(--board);padding:7px;
@@ -159,6 +162,7 @@ footer p+p{margin-top:7px}
   <h1>Royal Birkdale</h1>
   <p class="meta">July 16-19, 2026 &middot; best 5 of
   your 10 count &middot; low score wins</p>
+  <p class="upd">Updated <span id="upd-t"></span> <span id="upd-ago"></span></p>
 </div>
 
 <div class="board"><ul><li><span class="pos">1</span><span class="ent">Phil</span><span class="back">leader</span><span class="tile under">−6</span></li><li><span class="pos">1</span><span class="ent">Mark</span><span class="back">leader</span><span class="tile under">−6</span></li><li><span class="pos">3</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−3</span></li><li><span class="pos">3</span><span class="ent">Bill</span><span class="back">3 back</span><span class="tile under">−3</span></li></ul></div>
@@ -175,7 +179,7 @@ footer p+p{margin-top:7px}
   cut. <span class="proj">Grey</span> means he's still out there, projected to
   finish at his current number.</p>
   <p>Scores are strokes to par, so a man who hasn't teed off can't outrank one
-  who's already in. Updated Thu 1:47 PM.</p>
+  who's already in. Updated Thu 1:50 PM.</p>
 </footer>
 
 <button class="rf" onclick="freshen()" aria-label="Refresh scores">
@@ -192,7 +196,16 @@ function freshen() {
 }
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784209627129;
+const built = 1784209802418;
+const d = new Date(built);
+document.getElementById("upd-t").textContent =
+  d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
+function ago() {
+  const m = Math.max(0, Math.round((Date.now() - built) / 60000));
+  document.getElementById("upd-ago").textContent =
+    m === 0 ? "· just now" : "· " + m + " min ago";
+}
+ago(); setInterval(ago, 30000);
 const stale = () => Date.now() - built > 60000;
 addEventListener('visibilitychange', () => {
   if (!document.hidden && stale()) location.reload();
