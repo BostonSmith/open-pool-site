@@ -358,8 +358,12 @@ footer p+p{margin-top:7px}
   const N = 13, MSG = 4;
   const carry = new Set(
     [...Array(N).keys()].sort(() => Math.random() - 0.5).slice(0, MSG));
-  const bigSlot = [...Array(MSG).keys()].sort(() => Math.random() - 0.5);
-  const smallSlot = [...Array(N - MSG).keys()].sort(() => Math.random() - 0.5);
+  // Where a balloon flies and WHEN it launches must be drawn independently.
+  // Sharing one index makes position and time rise together — the balloons
+  // then trace a perfect diagonal instead of scattering.
+  const shuf = (n) => [...Array(n).keys()].sort(() => Math.random() - 0.5);
+  const bigBand = shuf(MSG), bigTime = shuf(MSG);
+  const smallBand = shuf(N - MSG), smallTime = shuf(N - MSG);
   const SAY = [
     (n) => [n, "IS THE", "BEST!"],
     (n) => ["GO", n + "!"],
@@ -374,13 +378,13 @@ footer p+p{margin-top:7px}
                   : 32 + Math.round(Math.random() * 28);    //  32..60  — far off
     let frac, delay;
     if (big) {
-      const k = bigSlot[bi++];
-      frac = 0.24 + ((k + 0.15 + Math.random() * 0.7) / MSG) * 0.52;  // stay on screen
-      delay = 0.4 + k * 1.65 + Math.random() * 0.4;                   // well apart
+      const kb = bigBand[bi], kt = bigTime[bi]; bi++;
+      frac = 0.24 + ((kb + 0.15 + Math.random() * 0.7) / MSG) * 0.52;  // stay on screen
+      delay = 0.4 + kt * 1.65 + Math.random() * 0.4;                   // well apart
     } else {
-      const k = smallSlot[si++];
-      frac = 0.04 + ((k + 0.15 + Math.random() * 0.7) / (N - MSG)) * 0.92;
-      delay = (k / (N - MSG)) * 6 + Math.random() * 0.5;
+      const kb = smallBand[si], kt = smallTime[si]; si++;
+      frac = 0.04 + ((kb + 0.15 + Math.random() * 0.7) / (N - MSG)) * 0.92;
+      delay = (kt / (N - MSG)) * 6 + Math.random() * 0.5;
     }
     const d = document.createElement("div");
     d.className = "blo";
@@ -389,6 +393,7 @@ footer p+p{margin-top:7px}
     d.style.height = (w * 1.66) + "px";
     d.style.zIndex = String(Math.round(w));             // near ones pass in front
     d.style.animationDelay = delay.toFixed(2) + "s";
+    d.style.bottom = (-24 - Math.random() * 14).toFixed(1) + "vh";  // stagger depth
     d.style.animationDuration = (big ? 7.2 + Math.random() * 1.4
                                      : 10.5 + Math.random() * 2).toFixed(2) + "s";
     d.innerHTML = shape(i, hues[i % hues.length],
@@ -434,7 +439,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784239577181;
+const built = 1784239843914;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
