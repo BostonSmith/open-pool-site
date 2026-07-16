@@ -50,7 +50,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .boardcap{background:var(--slot);color:var(--board);
   font-weight:800;font-stretch:82%;font-size:15px;letter-spacing:.28em;
   text-transform:uppercase;text-align:center;padding:8px 4px 7px}
-.board{background:var(--board);padding:20px 9px 10px;
+.board{background:var(--board);padding:10px 9px;
   background-image:repeating-linear-gradient(0deg,rgba(60,42,0,.05) 0 1px,transparent 1px 4px),
     linear-gradient(180deg,rgba(255,255,255,.10),transparent 30%);
   box-shadow:0 1px 0 #B98D12 inset,0 6px 18px rgba(22,21,15,.2)}
@@ -94,12 +94,22 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
   transform:translateX(-110%);animation:sheen 3s ease-in-out infinite}
 @keyframes sheen{0%,55%{transform:translateX(-110%)}
   85%,100%{transform:translateX(110%)}}
-.pl{position:relative;display:flex;min-width:0}
-.crown{position:absolute;left:0;bottom:calc(100% - 1px);width:100%;height:auto;
-  display:block;pointer-events:none;transform-origin:50% 100%;
-  animation:crn 3.4s ease-in-out infinite}
-@keyframes crn{0%,84%,100%{transform:translateY(0)}
-  91%{transform:translateY(-2px)}}
+/* the leader's plate is cut into a crown: five points, gold-tipped, with a
+   band line where the points meet the body. Points are a fixed 14px so the
+   shape holds whatever the name's width. */
+.ent.lead{padding-top:20px;
+  background:
+    radial-gradient(circle 2.1px at 7% 7px,#E6B31E 97%,transparent 99%),
+    radial-gradient(circle 2.1px at 29% 4px,#E6B31E 97%,transparent 99%),
+    radial-gradient(circle 2.5px at 50% 2px,#E6B31E 97%,transparent 99%),
+    radial-gradient(circle 2.1px at 71% 4px,#E6B31E 97%,transparent 99%),
+    radial-gradient(circle 2.1px at 93% 7px,#E6B31E 97%,transparent 99%),
+    var(--slot);
+  clip-path:polygon(0 100%, 0 14px, 7% 6px, 18% 14px, 29% 3px, 39.5% 14px,
+    50% 0, 60.5% 14px, 71% 3px, 82% 14px, 93% 6px, 100% 14px, 100% 100%)}
+.ent.lead::before{content:"";position:absolute;left:0;right:0;top:14px;
+  height:1.3px;background:#E6B31E;opacity:.4;z-index:1}
+.ent.champ.lead::before{background:var(--slot);opacity:.28}
 .spk{position:absolute;color:#E6B31E;font-weight:400;pointer-events:none;
   animation:twinkle 1.9s ease-in-out infinite}
 .spk.s1{font-size:11px;left:8px;top:1px}
@@ -107,7 +117,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.5) rotate(0)}
   50%{opacity:1;transform:scale(1) rotate(40deg)}}
 @media (prefers-reduced-motion:reduce){
-  .ent.lead::after,.spk,.crown{animation:none}}
+  .ent.lead::after,.spk{animation:none}}
 .ent.champ{background:var(--card);color:var(--slot);
   box-shadow:0 0 0 2px var(--slot),0 2px 4px rgba(40,28,0,.45)}
 .bfoot{border-top:1px solid rgba(22,21,15,.15);margin-top:4px;padding:5px 0 2px}
@@ -237,7 +247,7 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="pl"><svg class="crown" viewBox="0 0 160 16" aria-hidden="true"><path d="M0 16 L0 9.5 L12 5.5 L29 9.5 L46 4 L63 9.5 L80 2 L97 9.5 L114 4 L131 9.5 L148 5.5 L160 9.5 L160 16 Z" fill="var(--slot)"/><rect x="0" y="11.4" width="160" height="1.1" fill="#E6B31E" opacity=".42"/><circle cx="12" cy="5.5" r="1.8" fill="#E6B31E"/><circle cx="46" cy="4" r="1.8" fill="#E6B31E"/><circle cx="80" cy="2" r="2.2" fill="#E6B31E"/><circle cx="114" cy="4" r="1.8" fill="#E6B31E"/><circle cx="148" cy="5.5" r="1.8" fill="#E6B31E"/></svg><span class="ent lead">Mark</span></span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent lead">Mark</span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
 
 <h2>Every card, round by round</h2>
 <div class="legend">
@@ -375,10 +385,7 @@ function quietReload() {
 
 function freshen() {
   document.querySelector(".rf").classList.add("spin");
-  try {
-    sessionStorage.setItem("prevBuild", built);
-    sessionStorage.setItem("quiet", "1");
-  } catch (e) {}
+  try { sessionStorage.setItem("prevBuild", built); } catch (e) {}
   location.href = location.pathname + "?_=" + Date.now();
 }
 try {
@@ -396,7 +403,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784237406051;
+const built = 1784237770269;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
