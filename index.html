@@ -89,13 +89,14 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 /* Candy-Crush caption: fat dark outline behind, sweet gradient in front,
    springing in with an overshoot. Two stacked layers, because a single
    -webkit-text-stroke eats the letterforms from the inside out. */
-.say{--tilt:-2deg;position:relative;display:inline-block;white-space:nowrap;
+.ln{display:block;white-space:nowrap}
+.say{--tilt:-2deg;position:relative;display:inline-block;text-align:center;
   font-family:var(--gothic);font-weight:900;font-stretch:76%;
   font-size:21px;letter-spacing:.005em;line-height:1.05;
   text-transform:uppercase;margin-bottom:26px;
   transform:scale(0);opacity:0}
 .say.show{animation:popin .62s cubic-bezier(.2,1.4,.5,1) forwards}
-.say-o{display:block;color:#2A1505;
+.say-o{display:block;color:#2A1505;white-space:nowrap;
   -webkit-text-stroke:7px #2A1505;
   filter:drop-shadow(0 3px 0 #1B0D02) drop-shadow(0 6px 9px rgba(0,0,0,.5))}
 .say-f{position:absolute;left:0;top:0;right:0;
@@ -311,7 +312,7 @@ footer p+p{margin-top:7px}
 </footer>
 
 <div class="party" id="party" aria-hidden="true" data-leader="MARK"></div>
-<div class="goph" id="goph" aria-hidden="true" data-chasers="Dave:3,Bill:4,Phil:5"><b class="goph-guy">💂</b><b class="say" id="say"><i class="spark k1">✦</i><i class="spark k2">✦</i><i class="spark k3">✦</i><span class="say-o"></span><span class="say-f"></span></b></div>
+<div class="goph" id="goph" aria-hidden="true" data-troll="[{&quot;n&quot;: &quot;Dave&quot;, &quot;back&quot;: 3, &quot;w&quot;: &quot;Gotterup&quot;, &quot;wp&quot;: &quot;E&quot;}, {&quot;n&quot;: &quot;Bill&quot;, &quot;back&quot;: 4, &quot;w&quot;: &quot;Hovland&quot;, &quot;wp&quot;: &quot;E&quot;}, {&quot;n&quot;: &quot;Phil&quot;, &quot;back&quot;: 5, &quot;w&quot;: &quot;Hovland&quot;, &quot;wp&quot;: &quot;E&quot;}]"><b class="goph-guy">💂</b><b class="say" id="say"><i class="spark k1">✦</i><i class="spark k2">✦</i><i class="spark k3">✦</i><span class="say-o"></span><span class="say-f"></span></b></div>
 <button class="rf" onclick="freshen()" aria-label="Refresh scores">
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
        stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
@@ -533,30 +534,47 @@ footer p+p{margin-top:7px}
 (function guard() {
   const g = document.getElementById("goph");
   if (!g) return;
-  const chasers = (g.dataset.chasers || "").split(",").filter(Boolean)
-    .map((x) => { const [n, b] = x.split(":"); return {n: n, back: +b}; });
-  if (!chasers.length) return;
+  let troll = [];
+  try { troll = JSON.parse(g.dataset.troll || "[]"); } catch (e) {}
+  if (!troll.length) return;
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const say = document.getElementById("say");
   const outline = say.querySelector(".say-o");
   const fill = say.querySelector(".say-f");
   const guy = g.querySelector(".goph-guy");
 
-  // Three tiers of Englishness. Nipping at the lead earns sympathy;
-  // twelve back earns the full Palace treatment.
+  // He is a palace guard, not a vicar. British contempt is deadpan and
+  // specific: the real deficit, and the pick that is actually sinking them.
+  // t = {n: name, back: strokes behind, w: worst counting golfer, wp: his to-par}
   const CLOSE = [
-    (c) => "Nearly, " + c, (c) => "So close, " + c, (c) => "Not quite, " + c,
-    (c) => "Chin up, " + c, (c) => "Keep at it, " + c, (c) => "Almost, " + c,
+    (t) => [t.n + ", " + t.back + " back.", "Adorable."],
+    (t) => ["Close, " + t.n + ".", "Still losing."],
+    (t) => [t.n + " smells blood.", "Cute."],
+    (t) => ["This is your peak,", t.n + "."],
+    (t) => ["So near.", "So very far."],
+    (t) => [t.n + ", second", "is still second."],
+    (t) => ["Nearly, " + t.n + ".", "Nearly."],
   ];
   const MID = [
-    (c) => "Bad luck, " + c, (c) => "Oh dear, " + c, (c) => "Rotten luck, " + c,
-    (c) => "Do keep up, " + c, (c) => "Poor show, " + c, (c) => "Hard cheese, " + c,
-    (c) => "Steady on, " + c, (c) => c + ", mate?",
+    (t) => [t.n + ", " + t.back + " back.", "Bless."],
+    (t) => ["Is " + t.n, "alright?"],
+    (t) => [t.w + "?", "Bold, " + t.n + "."],
+    (t) => [t.n + " backed", t.w + "."],
+    (t) => [t.n + ".", "Oh, " + t.n + "."],
+    (t) => ["Someone tell", t.n + "."],
+    (t) => [t.n + " is trying.", "Sweet."],
+    (t) => [t.back + " back and", "sinking, " + t.n + "."],
   ];
   const FAR = [
-    (c) => "Dreadful, " + c, (c) => "Off you pop, " + c, (c) => "Shocking, " + c,
-    (c) => "Dear oh dear, " + c, (c) => "Have a word, " + c, (c) => "Blimey, " + c,
-    (c) => "It's over, " + c, (c) => "Cheerio, " + c, (c) => c + " is done",
+    (t) => [t.n + ", " + t.back + " back.", "Historic."],
+    (t) => ["Bin it,", t.n + "."],
+    (t) => [t.n + "'s card", "is a crime."],
+    (t) => [t.w + " " + t.wp + ",", t.n + "? Grim."],
+    (t) => [t.n + " has been", "eliminated."],
+    (t) => ["Go home,", t.n + "."],
+    (t) => [t.n + " picked", "with darts."],
+    (t) => ["We've stopped", "watching."],
+    (t) => [t.back + " back.", "Extraordinary."],
   ];
   const any = (a) => a[Math.floor(Math.random() * a.length)];
 
@@ -593,11 +611,18 @@ footer p+p{margin-top:7px}
   };
   const pop = () => {
     if (document.hidden) return later(20000, 40000);
-    const c = any(chasers);
-    const tier = c.back <= 3 ? 0 : (c.back <= 9 ? 1 : 2);
-    const line = any([CLOSE, MID, FAR][tier])(c.n);
-    outline.textContent = line;
-    fill.textContent = line;
+    const t = any(troll);
+    const tier = t.back <= 3 ? 0 : (t.back <= 9 ? 1 : 2);
+    // lines that name a pick are useless if we don't know one
+    // lines that name a pick are useless if we don't know one
+    const bank = [CLOSE, MID, FAR][tier].filter(
+      (f) => t.w || f({n: "x", back: 1, w: "", wp: ""}).join("")
+        .indexOf("") < 0);
+    const esc = (x) => x.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    const stack = any(bank.length ? bank : CLOSE)(t)
+      .map((l) => '<span class="ln">' + esc(l) + "</span>").join("");
+    outline.innerHTML = stack;
+    fill.innerHTML = stack;
     say.classList.remove("t1", "t2");
     if (tier) say.classList.add("t" + tier);
     place();
@@ -651,7 +676,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784243840390;
+const built = 1784244218008;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
