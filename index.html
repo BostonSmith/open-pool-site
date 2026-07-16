@@ -461,13 +461,24 @@ footer p+p{margin-top:7px}
     d.innerHTML = shape(i, base,
                         big ? SAY[mth++ % SAY.length](names[nth++ % names.length])
                             : []);
-    // no preventDefault: a tap pops, but a drag that starts on a balloon
-    // still scrolls the page
+    // No preventDefault, so a drag that starts on a balloon still scrolls.
     d.addEventListener("pointerdown", () => {
+      if (d.dataset.gone) return;
+      d.dataset.gone = "1";
       const q = d.getBoundingClientRect();
       burst(q.x + q.width / 2, q.y + q.height * 0.37, base);   // the body's centre
-      d.remove();
-    }, {once: true});
+      // Don't remove it yet. A tap's click is hit-tested after touchend — with
+      // the balloon already gone, that click lands on the board row underneath
+      // and scrolls the page to that card. So hide it, freeze it where it is,
+      // and let it swallow its own click on the way out.
+      d.style.animationPlayState = "paused";
+      d.firstChild.style.opacity = "0";
+      setTimeout(() => d.remove(), 400);
+    });
+    d.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+    });
     const sv = d.firstChild;
     sv.style.animationDuration = (3.4 + Math.random() * 2.4) + "s";
     sv.style.animationDelay = (-Math.random() * 4) + "s";   // desync the sway
@@ -508,7 +519,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784240763256;
+const built = 1784241328864;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
