@@ -75,13 +75,24 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .tile.none{color:var(--gorse)}
 .empty{font-family:var(--print);font-size:15px;padding:20px 10px;
   color:#6B5410;text-align:center}
-.jig{flex:none;margin-left:-2px}
-.jig-b{animation:jigbounce 1.05s ease-in-out infinite;transform-origin:12px 24px}
-.jig-c{animation:jigclub 1.05s ease-in-out infinite;transform-origin:17.5px 8.5px}
-@keyframes jigbounce{0%,100%{transform:translateY(0) rotate(-3deg)}
-  50%{transform:translateY(-2.5px) rotate(3deg)}}
-@keyframes jigclub{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(24deg)}}
-@media (prefers-reduced-motion:reduce){.jig-b,.jig-c{animation:none}}
+.jig{flex:none;margin-left:-1px}
+.jig-bod{animation:jigdance 1.5s ease-in-out infinite;transform-origin:14px 28px}
+.jig-arm{animation:jigwave 1.5s ease-in-out infinite;transform-origin:13.8px 9.8px}
+.jig-ll{animation:kickl 1.5s ease-in-out infinite;transform-origin:13.2px 17.6px}
+.jig-rl{animation:kickr 1.5s ease-in-out infinite;transform-origin:15.4px 17.6px}
+@keyframes jigdance{
+  0%,100%{transform:translateY(0) rotate(-6deg)}
+  25%{transform:translateY(-2.8px) rotate(0deg)}
+  50%{transform:translateY(0) rotate(6deg)}
+  75%{transform:translateY(-2.8px) rotate(0deg)}}
+@keyframes jigwave{
+  0%,100%{transform:rotate(-16deg)}50%{transform:rotate(18deg)}}
+@keyframes kickl{
+  0%,44%,100%{transform:rotate(0)}22%{transform:rotate(32deg)}}
+@keyframes kickr{
+  0%,56%,100%{transform:rotate(0)}78%{transform:rotate(-32deg)}}
+@media (prefers-reduced-motion:reduce){
+  .jig-bod,.jig-arm,.jig-ll,.jig-rl{animation:none}}
 .ent.champ{background:var(--card);color:var(--slot);
   box-shadow:0 0 0 2px var(--slot),0 2px 4px rgba(40,28,0,.45)}
 .bfoot{border-top:1px solid rgba(22,21,15,.15);margin-top:4px;padding:5px 0 2px}
@@ -211,15 +222,26 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent">Mark</span><svg class="jig" viewBox="0 0 26 30" width="22" height="26" aria-hidden="true">
-  <g class="jig-b">
-    <circle cx="12" cy="5" r="3.2" fill="var(--slot)"/>
-    <path d="M9.5 4 L15 3.2 L15 4.6 L10 5.4 Z" fill="#E6B31E"/>
-    <path d="M12 8.5 L12 17 M12 10.5 L7 14 M12 10.5 L17.5 8.5
-             M12 17 L8.5 24 M12 17 L16 23.5"
-          stroke="var(--slot)" stroke-width="2.3" stroke-linecap="round" fill="none"/>
-    <line class="jig-c" x1="17.5" y1="8.5" x2="23" y2="2.5"
-          stroke="var(--slot)" stroke-width="1.8" stroke-linecap="round"/>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent">Mark</span><svg class="jig" viewBox="0 0 34 32" width="27" height="25" aria-hidden="true">
+  <ellipse cx="14" cy="29" rx="8.5" ry="1.2" fill="var(--slot)" opacity=".18"/>
+  <g class="jig-bod">
+    <g class="jig-ll">
+      <path d="M12.6 17.2 L10 27.2 L12 27.8 L14.1 18.4 Z" fill="var(--slot)"/>
+    </g>
+    <g class="jig-rl">
+      <path d="M14.7 17.2 L15.7 27.6 L17.7 27.4 L16.3 17.2 Z" fill="var(--slot)"/>
+    </g>
+    <path d="M12.2 9 Q11.4 13.3 12.4 17.4 L16 17.4 Q16.6 12.8 15.3 9 Z"
+          fill="var(--slot)"/>
+    <circle cx="14.2" cy="5.4" r="3" fill="var(--slot)"/>
+    <path d="M11.2 4.4 L18.4 3.4 L18.5 4.8 L11.4 5.7 Z" fill="#E6B31E"/>
+    <g class="jig-arm">
+      <path d="M13.8 9.8 Q16.2 8 17.6 5.2" stroke="var(--slot)" stroke-width="2"
+            fill="none" stroke-linecap="round"/>
+      <line x1="17.6" y1="5.2" x2="25.5" y2="1.6" stroke="var(--slot)"
+            stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M25.5 1.6 L28.4 2.2 L28.1 3.6 L25.2 3 Z" fill="var(--slot)"/>
+    </g>
   </g>
 </svg><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
 
@@ -274,7 +296,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784233816579;
+const built = 1784234227407;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
