@@ -580,9 +580,9 @@ footer p+p{margin-top:7px}
     setTimeout(() => say.classList.add("show"), 340);   // he lands, then speaks
     setTimeout(() => {
       say.classList.remove("show");
-      setTimeout(() => g.classList.remove("up"), 220);
+      setTimeout(() => g.classList.remove("up"), 260);
       later(38000, 85000);
-    }, 4300);
+    }, 9600);          // long enough to actually read and enjoy it
   };
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
@@ -626,7 +626,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784242895018;
+const built = 1784243136038;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
