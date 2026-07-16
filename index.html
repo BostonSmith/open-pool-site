@@ -95,11 +95,14 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 @keyframes sheen{0%,55%{transform:translateX(-110%)}
   85%,100%{transform:translateX(110%)}}
 .pl{position:relative;display:flex;min-width:0}
-.crn{position:absolute;left:50%;bottom:calc(100% - 5px);z-index:2;
-  font-size:21px;line-height:1;pointer-events:none;
-  animation:crn 3.4s ease-in-out infinite}
-@keyframes crn{0%,84%,100%{transform:translateX(-50%) rotate(-7deg) translateY(0)}
-  91%{transform:translateX(-50%) rotate(-7deg) translateY(-3px)}}
+/* hooked on the plate's top-left corner, and swinging from that contact
+   point like something actually hung there */
+.crn{position:absolute;left:-8px;bottom:calc(100% - 4px);z-index:2;
+  font-size:29px;line-height:1;pointer-events:none;
+  transform-origin:78% 88%;
+  animation:crn 3.2s ease-in-out infinite}
+@keyframes crn{0%,100%{transform:rotate(-28deg)}
+  50%{transform:rotate(-18deg)}}
 .spk{position:absolute;color:#E6B31E;font-weight:400;pointer-events:none;
   animation:twinkle 1.9s ease-in-out infinite}
 .spk.s1{font-size:11px;left:8px;top:1px}
@@ -396,7 +399,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784238313171;
+const built = 1784238827994;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
