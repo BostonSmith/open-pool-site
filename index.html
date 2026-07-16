@@ -4,6 +4,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#E6B31E">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-title" content="The Pool">
 <title>The 154th Open Championship</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,10 +29,9 @@ body{background:var(--sky);color:var(--inkline);font-family:var(--gothic);
   padding-top:env(safe-area-inset-top)}
 
 /* ---------- masthead ---------- */
-.top{position:relative;padding:26px 0 14px;overflow:hidden}
-.links{position:absolute;left:-16px;right:-16px;bottom:0;width:calc(100% + 32px);
-  height:118px;z-index:0;pointer-events:none}
-.top>*:not(.links){position:relative;z-index:1}
+.top{padding:26px 0 6px}
+.links{display:block;width:calc(100% + 32px);margin:0 -16px;height:64px;
+  pointer-events:none}
 .eyebrow{font-family:var(--print);font-size:14px;font-style:italic;
   color:var(--gorse);letter-spacing:.01em}
 h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
@@ -150,18 +152,6 @@ footer p+p{margin-top:7px}
 </style></head><body>
 
 <div class="top">
-  <svg class="links" viewBox="0 0 560 118" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <path d="M0,86 C70,74 130,92 200,80 C280,66 340,88 420,78 C480,70 520,82 560,74 L560,118 L0,118 Z" fill="var(--dune1)"/>
-    <path d="M0,100 C90,90 160,106 250,96 C340,86 420,104 560,92 L560,118 L0,118 Z" fill="var(--dune2)"/>
-    <g stroke="#6B7A5E" stroke-width="1.6" stroke-linecap="round">
-      <path d="M74,80 l-3,-10 M79,80 l0,-12 M84,80 l3,-9"/>
-      <path d="M356,74 l-3,-9 M361,74 l0,-11 M366,74 l3,-8"/>
-    </g>
-    <g>
-      <line x1="468" y1="80" x2="468" y2="34" stroke="var(--inkline)" stroke-width="2"/>
-      <path d="M468,34 L494,41 L468,48 Z" fill="#E6B31E" stroke="var(--inkline)" stroke-width="1"/>
-    </g>
-  </svg>
   <p class="eyebrow">The 154th Open Championship</p>
   <h1>Royal Birkdale</h1>
   <p class="meta">July 16-19, 2026 &middot; best 5 of
@@ -169,7 +159,20 @@ footer p+p{margin-top:7px}
   <p class="upd">Updated <span id="upd-t"></span> <span id="upd-ago"></span></p>
 </div>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li><span class="pos">1</span><span class="ent">Dave</span><span class="back">leader</span><span class="tile under">−8</span></li><li><span class="pos">2</span><span class="ent">Phil</span><span class="back">2 back</span><span class="tile under">−6</span></li><li><span class="pos">2</span><span class="ent">Mark</span><span class="back">2 back</span><span class="tile under">−6</span></li><li><span class="pos">4</span><span class="ent">Bill</span><span class="back">3 back</span><span class="tile under">−5</span></li></ul></div></div>
+<svg class="links" viewBox="0 0 560 64" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M0,34 C70,24 130,40 200,30 C280,18 340,38 420,28 C480,22 520,32 560,26 L560,64 L0,64 Z" fill="var(--dune1)"/>
+    <path d="M0,48 C90,40 160,54 250,45 C340,36 420,52 560,42 L560,64 L0,64 Z" fill="var(--dune2)"/>
+    <g stroke="#6B7A5E" stroke-width="1.6" stroke-linecap="round">
+      <path d="M168,34 l-3,-9 M173,34 l0,-11 M178,34 l3,-8"/>
+      <path d="M392,32 l-3,-9 M397,32 l0,-11 M402,32 l3,-8"/>
+    </g>
+    <g>
+      <line x1="292" y1="36" x2="292" y2="6" stroke="var(--inkline)" stroke-width="2"/>
+      <path d="M292,6 L314,12 L292,18 Z" fill="#E6B31E" stroke="var(--inkline)" stroke-width="1"/>
+    </g>
+  </svg>
+
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li><span class="pos">1</span><span class="ent">Dave</span><span class="back">leader</span><span class="tile under">−8</span></li><li><span class="pos">T2</span><span class="ent">Phil</span><span class="back">2 back</span><span class="tile under">−6</span></li><li><span class="pos">T2</span><span class="ent">Mark</span><span class="back">2 back</span><span class="tile under">−6</span></li><li><span class="pos">4</span><span class="ent">Bill</span><span class="back">3 back</span><span class="tile under">−5</span></li></ul></div></div>
 
 <h2>Every card, round by round</h2>
 <article><h3>Dave<span class="under">−8</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Gotterup</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="on"><td class="g">Scheffler</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">MacIntyre</td><td class="">67</td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Åberg</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Clark</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Hatton</td><td class="proj">68<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Rose</td><td class="proj">75<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+5</span></td></tr></tbody></table></article><article><h3>Phil<span class="under">−6</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland</td><td class="proj">69<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Rose</td><td class="proj">75<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+5</span></td></tr><tr class="on"><td class="g">MacIntyre</td><td class="">67</td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fox</td><td class="">72</td><td></td><td></td><td></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Hatton</td><td class="proj">68<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="on"><td class="g">Keefer</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Clark</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr></tbody></table></article><article><h3>Mark<span class="under">−6</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Scheffler</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Young</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Schauffele</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Åberg</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">DeChambeau</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Rahm</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Cantlay</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr></tbody></table></article><article><h3>Bill<span class="under">−5</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland</td><td class="proj">69<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Rose</td><td class="proj">75<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+5</span></td></tr><tr class="on"><td class="g">Scheffler</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Smith</td><td class="proj">73<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+3</span></td></tr><tr class="on"><td class="g">Kim</td><td class="proj">69<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Gotterup</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Young</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr></tbody></table></article>
@@ -200,7 +203,7 @@ function freshen() {
 }
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784210176137;
+const built = 1784210386110;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
