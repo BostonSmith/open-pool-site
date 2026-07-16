@@ -76,18 +76,45 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .empty{font-family:var(--print);font-size:15px;padding:20px 10px;
   color:#6B5410;text-align:center}
 .party{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:8}
-/* he lives under the bottom-left edge and comes up for air */
-.goph{position:fixed;left:12px;bottom:0;z-index:9;pointer-events:none;
-  display:flex;align-items:flex-end;gap:7px;max-width:calc(100vw - 90px);
-  transform:translateY(115%);
-  transition:transform .55s cubic-bezier(.18,1.35,.5,1)}
+/* The Guard marches up from the bottom-left edge. */
+.goph{position:fixed;left:10px;bottom:0;z-index:9;pointer-events:none;
+  display:flex;align-items:flex-end;gap:4px;
+  transform:translateY(118%);
+  transition:transform .5s cubic-bezier(.2,1.5,.45,1)}
 .goph.up{transform:translateY(0)}
-.goph-guy{font-size:34px;line-height:1;display:block;
+.goph-guy{font-size:76px;line-height:.94;display:block;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));
   padding-bottom:calc(2px + env(safe-area-inset-bottom))}
-.goph-say{background:var(--slot);color:var(--board);font-family:var(--print);
-  font-style:italic;font-size:13px;padding:6px 12px 7px;border-radius:15px;
-  margin-bottom:12px;box-shadow:0 3px 10px rgba(0,0,0,.32);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Candy-Crush caption: fat dark outline behind, sweet gradient in front,
+   springing in with an overshoot. Two stacked layers, because a single
+   -webkit-text-stroke eats the letterforms from the inside out. */
+.say{position:relative;display:inline-block;white-space:nowrap;
+  font-family:var(--gothic);font-weight:900;font-stretch:76%;
+  font-size:21px;letter-spacing:.005em;line-height:1.05;
+  text-transform:uppercase;margin-bottom:26px;
+  transform:scale(0);opacity:0}
+.say.show{animation:popin .62s cubic-bezier(.2,1.4,.5,1) forwards}
+.say-o{display:block;color:#2A1505;
+  -webkit-text-stroke:7px #2A1505;
+  filter:drop-shadow(0 3px 0 #1B0D02) drop-shadow(0 6px 9px rgba(0,0,0,.5))}
+.say-f{position:absolute;left:0;top:0;right:0;
+  background:linear-gradient(180deg,#FFF7C8 0%,#FFD84E 46%,#F0940F 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes popin{
+  0%{transform:scale(0) rotate(-14deg);opacity:0}
+  50%{transform:scale(1.22) rotate(4deg);opacity:1}
+  68%{transform:scale(.92) rotate(-3deg)}
+  84%{transform:scale(1.06) rotate(1.5deg)}
+  100%{transform:scale(1) rotate(-2deg);opacity:1}}
+.spark{position:absolute;color:#FFE87A;font-style:normal;opacity:0;
+  pointer-events:none;text-shadow:0 0 6px rgba(255,220,90,.9)}
+.say.show .spark{animation:kpop 1.5s ease-in-out infinite}
+.spark.k1{font-size:15px;left:-9px;top:-13px}
+.spark.k2{font-size:11px;right:-7px;top:-7px;animation-delay:.45s}
+.spark.k3{font-size:9px;right:16px;bottom:-11px;animation-delay:.9s}
+@keyframes kpop{0%,100%{opacity:0;transform:scale(.4) rotate(0)}
+  50%{opacity:1;transform:scale(1) rotate(45deg)}}
 .blo{position:absolute;bottom:-26vh;animation:rise linear forwards;
   will-change:transform,opacity;
   /* .party stays pointer-events:none, so only the balloons catch a tap and
@@ -127,7 +154,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.5) rotate(0)}
   50%{opacity:1;transform:scale(1) rotate(40deg)}}
 @media (prefers-reduced-motion:reduce){
-  .ent.lead::after,.spk,.crn{animation:none}}
+  .ent.lead::after,.spk,.crn,.spark{animation:none}}
 .ent.champ{background:var(--card);color:var(--slot);
   box-shadow:0 0 0 2px var(--slot),0 2px 4px rgba(40,28,0,.45)}
 .bfoot{border-top:1px solid rgba(22,21,15,.15);margin-top:4px;padding:5px 0 2px}
@@ -281,7 +308,7 @@ footer p+p{margin-top:7px}
 </footer>
 
 <div class="party" id="party" aria-hidden="true" data-leader="MARK"></div>
-<div class="goph" id="goph" aria-hidden="true" data-chasers="Dave,Bill,Phil"><b class="goph-say"></b><b class="goph-guy">🐹</b></div>
+<div class="goph" id="goph" aria-hidden="true" data-chasers="Dave,Bill,Phil"><b class="goph-guy">💂</b><b class="say" id="say"><i class="spark k1">✦</i><i class="spark k2">✦</i><i class="spark k3">✦</i><span class="say-o"></span><span class="say-f"></span></b></div>
 <button class="rf" onclick="freshen()" aria-label="Refresh scores">
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
        stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
@@ -500,28 +527,44 @@ footer p+p{margin-top:7px}
   setTimeout(() => box.remove(), 20000);
 })();
 
-(function gopher() {
+(function guard() {
   const g = document.getElementById("goph");
   if (!g) return;
   const chasers = (g.dataset.chasers || "").split(",").filter(Boolean);
   if (!chasers.length) return;
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const say = g.querySelector(".goph-say");
+  const say = document.getElementById("say");
+  const outline = say.querySelector(".say-o");
+  const fill = say.querySelector(".say-f");
+  const guy = g.querySelector(".goph-guy");
+
+  // Game captions are short. Long ones shrink to nothing on a phone.
   const LINES = [
-    (c) => "Nice try, " + c + ".",
-    (c) => "Tough day, " + c + "?",
-    (c) => "Somebody check on " + c + ".",
-    (c) => c + " picked wrong.",
-    (c) => "Still waiting on " + c + ".",
-    (c) => c + "'s five are cooked.",
-    (c) => "Keep trying, " + c + ".",
-    (c) => c + " needs a miracle.",
-    (c) => "Rough one, " + c + ".",
-    (c) => "How's it going, " + c + "?",
-    (c) => c + ", maybe next major.",
-    (c) => "Not your week, " + c + ".",
+    (c) => "Nice try, " + c,
+    (c) => c + " who?",
+    (c) => "Oof, " + c,
+    (c) => "Not today, " + c,
+    (c) => "Sorry, " + c,
+    (c) => c + " is cooked",
+    (c) => "Tough one, " + c,
+    (c) => c + " needs help",
+    (c) => "Rough, " + c,
+    (c) => "Bless you, " + c,
+    (c) => c + ", mate?",
+    (c) => "Cheerio, " + c,
   ];
   const any = (a) => a[Math.floor(Math.random() * a.length)];
+
+  const fit = () => {
+    const room = window.innerWidth - 20 - guy.offsetWidth - 16;
+    let fs = 21;
+    say.style.fontSize = fs + "px";
+    while (say.offsetWidth > room && fs > 12) {
+      fs -= 1;
+      say.style.fontSize = fs + "px";
+    }
+  };
+
   let timer;
   const later = (lo, hi) => {
     clearTimeout(timer);
@@ -529,13 +572,24 @@ footer p+p{margin-top:7px}
   };
   const pop = () => {
     if (document.hidden) return later(20000, 40000);
-    say.textContent = any(LINES)(any(chasers));
+    const line = any(LINES)(any(chasers));
+    outline.textContent = line;
+    fill.textContent = line;
+    fit();
     g.classList.add("up");
-    setTimeout(() => { g.classList.remove("up"); later(38000, 85000); }, 4300);
+    setTimeout(() => say.classList.add("show"), 340);   // he lands, then speaks
+    setTimeout(() => {
+      say.classList.remove("show");
+      setTimeout(() => g.classList.remove("up"), 220);
+      later(38000, 85000);
+    }, 4300);
   };
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) { clearTimeout(timer); g.classList.remove("up"); }
-    else later(15000, 35000);
+    if (document.hidden) {
+      clearTimeout(timer);
+      g.classList.remove("up");
+      say.classList.remove("show");
+    } else later(15000, 35000);
   });
   later(14000, 26000);        // let the balloons finish first
 })();
@@ -572,7 +626,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784241833932;
+const built = 1784242895018;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
