@@ -1,16 +1,28 @@
 name: heartbeat
 
-# Lives in the PUBLIC repo purely to tick. The private repo's own scheduler
-# has never fired (0 scheduled runs across two cron styles), so this repo
-# relays the beat via workflow_dispatch. The private build's gate enforces
-# play hours and freshness, so extra beats are always safe.
+# GitHub's cron scheduler has never fired for this account (three styles,
+# two repos, zero scheduled runs). So this workflow times ITSELF: each run
+# relays one build trigger, sleeps ~9 minutes, then dispatches its own next
+# run. The cron stays as a backup that costs nothing if it ever wakes up.
+# The private build's freshness guard makes overlapping beats harmless.
+#
+# To (re)start the chain: Run workflow with chain = yes.
 
 on:
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
+    inputs:
+      chain:
+        description: "yes = keep self-dispatching every ~10 min"
+        default: "no"
+        type: string
 
 permissions: {}
+
+concurrency:
+  group: chain
+  cancel-in-progress: false
 
 jobs:
   tick:
@@ -20,8 +32,24 @@ jobs:
         env:
           RELAY_TOKEN: ${{ secrets.RELAY_TOKEN }}
         run: |
-          curl -s -o /dev/null -w "dispatch: %{http_code}\n" -X POST \
+          curl -s -o /dev/null -w "relay: %{http_code}\n" -X POST \
             -H "Authorization: Bearer $RELAY_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/${{ github.repository_owner }}/open-pool/actions/workflows/update.yml/dispatches \
             -d '{"ref":"main","inputs":{"source":"relay"}}'
+      - name: Sleep and pass the baton
+        if: inputs.chain == 'yes'
+        env:
+          RELAY_TOKEN: ${{ secrets.RELAY_TOKEN }}
+        run: |
+          h=$(date -u +%H); m=$(date -u +%m); d=$(date -u +%d)
+          if [ "$m" = "07" ] && [ "$d" -ge 16 ] && [ "$d" -le 19 ] && [ "$h" -ge 04 ] && [ "$h" -le 21 ]; then
+            sleep 540
+          else
+            sleep 3300   # off-hours: long nap, chain survives the night cheaply
+          fi
+          curl -s -o /dev/null -w "next beat: %{http_code}\n" -X POST \
+            -H "Authorization: Bearer $RELAY_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository_owner }}/open-pool-site/actions/workflows/heartbeat.yml/dispatches \
+            -d '{"ref":"main","inputs":{"chain":"yes"}}'
