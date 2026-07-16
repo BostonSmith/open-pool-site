@@ -75,6 +75,13 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .tile.none{color:var(--gorse)}
 .empty{font-family:var(--print);font-size:15px;padding:20px 10px;
   color:#6B5410;text-align:center}
+.jig{flex:none;margin-left:-2px}
+.jig-b{animation:jigbounce 1.05s ease-in-out infinite;transform-origin:12px 24px}
+.jig-c{animation:jigclub 1.05s ease-in-out infinite;transform-origin:17.5px 8.5px}
+@keyframes jigbounce{0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-2.5px) rotate(3deg)}}
+@keyframes jigclub{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(24deg)}}
+@media (prefers-reduced-motion:reduce){.jig-b,.jig-c{animation:none}}
 .ent.champ{background:var(--card);color:var(--slot);
   box-shadow:0 0 0 2px var(--slot),0 2px 4px rgba(40,28,0,.45)}
 .bfoot{border-top:1px solid rgba(22,21,15,.15);margin-top:4px;padding:5px 0 2px}
@@ -204,7 +211,17 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent">Mark</span><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li onclick="go('c-mark')"><span class="pos">1</span><span class="ent">Mark</span><svg class="jig" viewBox="0 0 26 30" width="22" height="26" aria-hidden="true">
+  <g class="jig-b">
+    <circle cx="12" cy="5" r="3.2" fill="var(--slot)"/>
+    <path d="M9.5 4 L15 3.2 L15 4.6 L10 5.4 Z" fill="#E6B31E"/>
+    <path d="M12 8.5 L12 17 M12 10.5 L7 14 M12 10.5 L17.5 8.5
+             M12 17 L8.5 24 M12 17 L16 23.5"
+          stroke="var(--slot)" stroke-width="2.3" stroke-linecap="round" fill="none"/>
+    <line class="jig-c" x1="17.5" y1="8.5" x2="23" y2="2.5"
+          stroke="var(--slot)" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+</svg><span class="back">leader</span><span class="tile under">−10</span></li><li onclick="go('c-dave')"><span class="pos">2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li onclick="go('c-bill')"><span class="pos">3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li onclick="go('c-phil')"><span class="pos">4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
 
 <h2>Every card, round by round</h2>
 <div class="legend">
@@ -257,7 +274,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784233431600;
+const built = 1784233816579;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
