@@ -1,1 +1,186 @@
-<!DOCTYPE html><meta charset=utf-8><title>Open Pool</title><p>First scores coming through shortly.
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#E6B31E">
+<title>The 154th Open Championship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&family=Newsreader:opsz,wght@6..72,300..500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light dark;
+  --sky:#E7EBE4; --board:#E6B31E; --slot:#16150F; --inkline:#16150F;
+  --under:#C8102E; --underlite:#FF5A47; --gorse:#6B7A5E; --card:#FBFBF9;
+  --hair:#D4D9CE; --hair2:#E2E6DB; --hair3:#EFF1EA; --dim:#A9B0A4;
+  --dune1:#D7DDD0; --dune2:#C6CEBD; --onslot:#F2F0E6;
+  --gothic:"Archivo",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --print:"Newsreader",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--sky);color:var(--inkline);font-family:var(--gothic);
+  font-size:17px;line-height:1.4;max-width:560px;margin-inline:auto;
+  padding:0 16px calc(48px + env(safe-area-inset-bottom));
+  padding-top:env(safe-area-inset-top)}
+
+/* ---------- masthead ---------- */
+.top{position:relative;padding:26px 0 14px;overflow:hidden}
+.links{position:absolute;left:-16px;right:-16px;bottom:0;width:calc(100% + 32px);
+  height:118px;z-index:0;pointer-events:none}
+.top>*:not(.links){position:relative;z-index:1}
+.eyebrow{font-family:var(--print);font-size:14px;font-style:italic;
+  color:var(--gorse);letter-spacing:.01em}
+h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
+  font-size:clamp(38px,13vw,54px);line-height:.88;letter-spacing:-.01em;
+  text-transform:uppercase;margin:4px 0 8px}
+.meta{font-family:var(--print);font-size:14px;color:var(--gorse)}
+
+/* ---------- the board (the one loud thing) ---------- */
+.board{background:var(--board);padding:7px;
+  box-shadow:0 1px 0 #B98D12 inset,0 6px 18px rgba(22,21,15,.16)}
+.board ul{list-style:none;padding:0}
+.board li{display:flex;align-items:center;gap:9px;
+  padding:9px 4px;border-bottom:1px solid rgba(22,21,15,.17)}
+.board li:last-child{border-bottom:0}
+.pos{font-weight:900;font-size:15px;width:15px;opacity:.5;flex:none}
+.ent{font-weight:800;font-stretch:82%;font-size:23px;letter-spacing:.02em;
+  text-transform:uppercase;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mc{font-family:var(--print);font-style:italic;font-size:12px;font-weight:400;
+  text-transform:none;letter-spacing:0;color:#7A2016;margin-left:7px}
+.back{font-family:var(--print);font-size:12.5px;color:#6B5410;flex:none}
+.tile{background:var(--slot);color:var(--onslot);font-weight:900;
+  font-stretch:80%;font-size:21px;font-variant-numeric:tabular-nums;
+  min-width:58px;padding:5px 8px;text-align:center;flex:none;
+  box-shadow:0 1px 2px rgba(22,21,15,.4)}
+.tile.under{color:var(--underlite)}
+.tile.none{color:var(--gorse)}
+.empty{font-family:var(--print);font-size:15px;padding:20px 10px;
+  color:#6B5410;text-align:center}
+
+/* ---------- cards ---------- */
+h2{font-family:var(--print);font-size:13px;font-style:italic;
+  color:var(--gorse);margin:30px 0 9px}
+article{background:var(--card);border:1px solid var(--hair);margin-bottom:11px}
+article h3{display:flex;justify-content:space-between;align-items:baseline;
+  background:var(--slot);color:var(--onslot);padding:6px 11px;
+  font-weight:800;font-stretch:82%;font-size:15px;letter-spacing:.09em;
+  text-transform:uppercase}
+article h3 .under{color:var(--underlite)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+thead th{font-family:var(--print);font-size:10.5px;font-weight:400;
+  font-style:italic;color:var(--gorse);padding:5px 2px;text-align:center;
+  border-bottom:1px solid var(--hair2)}
+tbody td{padding:6px 2px;text-align:center;font-size:15px;
+  border-bottom:1px solid var(--hair3)}
+tbody tr:last-child td{border-bottom:0}
+.g{text-align:left;padding-left:11px;font-weight:500;
+  border-left:3px solid transparent}
+tr.on .g{border-left-color:var(--board);font-weight:700}
+tr.off{color:var(--dim)}
+tr.off .tp .under,tr.off .tp .over,tr.off .tp .even{color:inherit}
+.tp{font-weight:700;width:44px;padding-right:8px;text-align:right}
+.under{color:var(--under)}
+.pen{color:var(--under);font-weight:700}
+.proj{color:var(--gorse);font-style:italic}
+.live{display:inline-block;width:4px;height:4px;border-radius:50%;
+  background:var(--under);vertical-align:2px;margin-left:3px;
+  animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.3}50%{opacity:1}}
+
+details{background:var(--card);border:1px solid var(--hair);margin-bottom:8px}
+summary{display:flex;justify-content:space-between;align-items:baseline;
+  gap:10px;padding:9px 12px;cursor:pointer;list-style:none;
+  -webkit-tap-highlight-color:transparent}
+summary::-webkit-details-marker{display:none}
+summary b{font-weight:700;font-size:16px}
+summary span{font-family:var(--print);font-size:13px;color:var(--gorse)}
+summary i{font-style:normal;font-weight:700}
+details[open] summary{border-bottom:1px solid var(--hair2)}
+.nine{margin:7px 8px 10px;width:calc(100% - 16px)}
+.nine th,.nine td{border:0;padding:3px 0;font-size:12.5px;text-align:center;
+  font-variant-numeric:tabular-nums}
+.nine thead th{font-family:var(--print);font-style:italic;font-weight:400;
+  color:var(--gorse);font-size:11px}
+.nine .lab{text-align:left;width:44px;font-family:var(--print);
+  font-style:italic;color:var(--gorse);font-size:11px;padding-left:3px}
+.nine span{display:inline-flex;width:21px;height:21px;align-items:center;
+  justify-content:center}
+.bir{border:1.5px solid var(--under);border-radius:50%;color:var(--under)}
+.eag{border:1.5px solid var(--under);border-radius:50%;color:var(--under);
+  outline:1.5px solid var(--under);outline-offset:1.5px}
+.bog{border:1.5px solid var(--gorse)}
+.dbl{border:1.5px solid var(--gorse);outline:1.5px solid var(--gorse);
+  outline-offset:1.5px}
+.key{font-family:var(--print);font-size:12.5px;color:var(--gorse);
+  margin:0 0 9px}
+.key span{display:inline-flex;width:19px;height:19px;align-items:center;
+  justify-content:center;font-size:11.5px;font-family:var(--gothic)}
+footer{font-family:var(--print);font-size:13px;line-height:1.55;
+  color:var(--gorse);margin-top:26px;padding-top:13px;
+  border-top:1px solid var(--hair)}
+footer p+p{margin-top:7px}
+@media (prefers-color-scheme:dark){
+  :root{
+    --sky:#14130E; --inkline:#E9E7DD; --card:#1D1C15;
+    --gorse:#9AA88B; --under:#FF6B57;
+    --hair:#2C2A20; --hair2:#2C2A20; --hair3:#26241B; --dim:#5E5C50;
+    --dune1:#1B1A13; --dune2:#22201730;
+  }
+  .board{box-shadow:0 1px 0 #8A6A0E inset,0 6px 18px rgba(0,0,0,.5)}
+  .tile{box-shadow:0 1px 2px rgba(0,0,0,.6)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+
+<div class="top">
+  <svg class="links" viewBox="0 0 560 118" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M0,86 C70,74 130,92 200,80 C280,66 340,88 420,78 C480,70 520,82 560,74 L560,118 L0,118 Z" fill="var(--dune1)"/>
+    <path d="M0,100 C90,90 160,106 250,96 C340,86 420,104 560,92 L560,118 L0,118 Z" fill="var(--dune2)"/>
+    <g stroke="#6B7A5E" stroke-width="1.6" stroke-linecap="round">
+      <path d="M74,80 l-3,-10 M79,80 l0,-12 M84,80 l3,-9"/>
+      <path d="M356,74 l-3,-9 M361,74 l0,-11 M366,74 l3,-8"/>
+    </g>
+    <g>
+      <line x1="468" y1="80" x2="468" y2="34" stroke="var(--inkline)" stroke-width="2"/>
+      <path d="M468,34 L494,41 L468,48 Z" fill="#E6B31E" stroke="var(--inkline)" stroke-width="1"/>
+    </g>
+  </svg>
+  <p class="eyebrow">The 154th Open Championship</p>
+  <h1>Royal Birkdale</h1>
+  <p class="meta">July 16-19, 2026 &middot; best 5 of
+  your 10 count &middot; low score wins</p>
+</div>
+
+<div class="board"><ul><li><span class="pos">1</span><span class="ent">Mark</span><span class="back">leader</span><span class="tile under">−7</span></li><li><span class="pos">2</span><span class="ent">Phil</span><span class="back">3 back</span><span class="tile under">−4</span></li><li><span class="pos">3</span><span class="ent">Dave</span><span class="back">6 back</span><span class="tile under">−1</span></li><li><span class="pos">3</span><span class="ent">Bill</span><span class="back">6 back</span><span class="tile under">−1</span></li></ul></div>
+
+<h2>Every card, round by round</h2>
+<article><h3>Mark<span class="under">−7</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Scheffler</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">71<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Young</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Schauffele</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Åberg</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">DeChambeau</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Rahm</td><td class="proj">68<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Cantlay</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr></tbody></table></article><article><h3>Phil<span class="under">−4</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Rose</td><td class="proj">76<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+6</span></td></tr><tr class="on"><td class="g">MacIntyre</td><td class="">67</td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fox</td><td class="">72</td><td></td><td></td><td></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Hatton</td><td class="proj">68<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="on"><td class="g">Keefer</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Clark</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">71<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+1</span></td></tr></tbody></table></article><article><h3>Dave<span class="under">−1</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="off"><td class="g">Gotterup</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Scheffler</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">MacIntyre</td><td class="">67</td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">71<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Åberg</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Clark</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Hatton</td><td class="proj">68<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="on"><td class="g">Rose</td><td class="proj">76<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+6</span></td></tr></tbody></table></article><article><h3>Bill<span class="under">−1</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="on"><td class="g">Fleetwood</td><td class="proj">71<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Fitzpatrick</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Rose</td><td class="proj">76<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+6</span></td></tr><tr class="on"><td class="g">Scheffler</td><td class="proj">67<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Smith</td><td class="proj">71<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">Kim</td><td class="proj">70<i class="live"></i></td><td></td><td></td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Gotterup</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">McIlroy</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr><tr class="off"><td class="g">Young</td><td></td><td></td><td></td><td></td><td class="tp"></td></tr></tbody></table></article>
+
+
+
+<footer>
+  <p>A gold edge marks the 5 golfers scoring for that card right
+  now &mdash; it re-picks itself as scores land.
+  <span class="pen">Red rounds</span> are the 80 rule for a missed
+  cut. <span class="proj">Grey</span> means he's still out there, projected to
+  finish at his current number.</p>
+  <p>Scores are strokes to par, so a man who hasn't teed off can't outrank one
+  who's already in. Updated Thu 1:12 PM.</p>
+</footer>
+
+<script>
+// Refresh when you come back to it, or while it's sitting idle at the top.
+// Never while someone is reading a card.
+const built = 1784207544750;
+const stale = () => Date.now() - built > 60000;
+addEventListener('visibilitychange', () => {
+  if (!document.hidden && stale()) location.reload();
+});
+setInterval(() => {
+  if (!document.hidden && scrollY < 40 && stale()) location.reload();
+}, 180000);
+</script>
+</body></html>
