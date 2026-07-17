@@ -75,28 +75,6 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .tile.none{color:var(--gorse)}
 .empty{font-family:var(--print);font-size:15px;padding:20px 10px;
   color:#6B5410;text-align:center}
-/* THE RACE: the pool as physical distance */
-.race{margin:14px 2px 4px;background:var(--card);border-radius:8px;
-  padding:9px 10px 12px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.race-cap{font-size:11px;letter-spacing:.34em;text-transform:uppercase;
-  color:var(--gorse);margin:0 0 6px 2px}
-.race-track{position:relative;height:66px;border-radius:6px;
-  background:linear-gradient(90deg,rgba(230,179,30,.05),rgba(230,179,30,.16));
-  overflow:hidden}
-.race-track::before{content:"";position:absolute;inset:auto 0 50% 0;height:1px;
-  background:rgba(230,179,30,.25)}
-.race-flag{position:absolute;right:6px;top:50%;transform:translateY(-50%);
-  font-style:normal;font-size:22px}
-.rp{position:absolute;display:inline-flex;align-items:baseline;gap:5px;
-  background:var(--slot);color:var(--board);border-left:4px solid var(--rc);
-  font-family:var(--gothic);font-weight:800;font-stretch:80%;font-size:12px;
-  letter-spacing:.03em;padding:3px 8px 4px 6px;border-radius:4px;
-  box-shadow:0 3px 8px rgba(0,0,0,.4);white-space:nowrap;
-  left:calc(var(--x) * (100% - 118px) + 5px);
-  transition:left 1.6s cubic-bezier(.22,1,.36,1)}
-.rp span{font-size:10.5px;font-weight:700;opacity:.75}
-.rp.hi{top:7px} .rp.lo{bottom:7px}
-
 /* movement since the last update */
 .mv{font-size:10px;font-weight:800;letter-spacing:.02em;margin-right:6px;
   vertical-align:1px;animation:mvpop .5s cubic-bezier(.2,1.6,.5,1) both}
@@ -207,7 +185,7 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
   50%{opacity:1;transform:scale(1) rotate(40deg)}}
 @media (prefers-reduced-motion:reduce){
   .ent.lead::after,.spk,.crn,.spark,.mv,.tile.chg{animation:none}
-  .rp{transition:none}}
+}
 .ent.champ{background:var(--card);color:var(--slot);
   box-shadow:0 0 0 2px var(--slot),0 2px 4px rgba(40,28,0,.45)}
 .bfoot{border-top:1px solid rgba(22,21,15,.15);margin-top:4px;padding:5px 0 2px}
@@ -337,8 +315,7 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li data-flip="" onclick="go('c-mark')"><span class="pos"><i class="edot" style="--rc:#C77DFF"></i>1</span><span class="pl"><b class="crn">👑</b><span class="ent lead">Mark</span></span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li data-flip="" onclick="go('c-dave')"><span class="pos"><i class="edot" style="--rc:#4FA3FF"></i>2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li data-flip="" onclick="go('c-bill')"><span class="pos"><i class="edot" style="--rc:#FF6B57"></i>3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li data-flip="" onclick="go('c-phil')"><span class="pos"><i class="edot" style="--rc:#3ECF8E"></i>4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
-<div class="race" aria-hidden="true"><div class="race-cap cond">The race</div><div class="race-track"><i class="race-flag">⛳</i><b class="rp hi" style="--x:0.8333;--rc:#C77DFF" data-x="0.8333">MARK<span>−10</span></b><b class="rp lo" style="--x:0.3333;--rc:#4FA3FF" data-x="0.3333">DAVE<span>−7</span></b><b class="rp hi" style="--x:0.1667;--rc:#FF6B57" data-x="0.1667">BILL<span>−6</span></b><b class="rp lo" style="--x:0.0000;--rc:#3ECF8E" data-x="0.0000">PHIL<span>−5</span></b></div></div>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li data-flip="0" onclick="go('c-mark')"><span class="pos"><i class="edot" style="--rc:#C77DFF"></i>1</span><span class="pl"><b class="crn">👑</b><span class="ent lead">Mark</span></span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−10</span></li><li data-flip="1" onclick="go('c-dave')"><span class="pos"><i class="edot" style="--rc:#4FA3FF"></i>2</span><span class="ent">Dave</span><span class="back">3 back</span><span class="tile under">−7</span></li><li data-flip="2" onclick="go('c-bill')"><span class="pos"><i class="edot" style="--rc:#FF6B57"></i>3</span><span class="ent">Bill</span><span class="back">4 back</span><span class="tile under">−6</span></li><li data-flip="3" onclick="go('c-phil')"><span class="pos"><i class="edot" style="--rc:#3ECF8E"></i>4</span><span class="ent">Phil</span><span class="back">5 back</span><span class="tile under">−5</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +3, Smith +3, Fox +2, McIlroy +2, Fitzpatrick +2</p><p>Low round Thursday · Young 67</p></div></div></div>
 
 <h2>Every card, round by round</h2>
 <div class="legend">
@@ -598,33 +575,47 @@ footer p+p{margin-top:7px}
   // t = {n: name, back: strokes behind, w: worst counting golfer, wp: his to-par}
   const CLOSE = [
     (t) => [t.n + ", " + t.back + " back.", "Adorable."],
-    (t) => ["Close, " + t.n + ".", "Still losing."],
-    (t) => [t.n + " smells blood.", "Cute."],
-    (t) => ["This is your peak,", t.n + "."],
-    (t) => ["So near.", "So very far."],
-    (t) => [t.n + ", second", "is still second."],
-    (t) => ["Nearly, " + t.n + ".", "Nearly."],
+    (t) => [t.n + " lurks.", "Menacingly."],
+    (t) => ["Second place is", "first loser."],
+    (t) => ["The leader is", "not nervous."],
+    (t) => [t.n + " believes.", "Bless."],
+    (t) => ["Ooh, so close.", "Anyway."],
+    (t) => ["Almost counts", "for nothing."],
+    (t) => [t.n + " smells", "blood. His own."],
+    (t) => ["Cute run, " + t.n + ".", "It ends here."],
+    (t) => ["History forgets", "runners-up."],
   ];
   const MID = [
-    (t) => [t.n + ", " + t.back + " back.", "Bless."],
-    (t) => ["Is " + t.n, "alright?"],
-    (t) => [t.w + "?", "Bold, " + t.n + "."],
-    (t) => [t.n + " backed", t.w + "."],
-    (t) => [t.n + ".", "Oh, " + t.n + "."],
-    (t) => ["Someone tell", t.n + "."],
-    (t) => [t.n + " is trying.", "Sweet."],
-    (t) => [t.back + " back and", "sinking, " + t.n + "."],
+    (t) => [t.n + " paid money", "to feel this."],
+    (t) => [t.w + "?", "A bold theory."],
+    (t) => [t.n + " backed", t.w + ".", "On purpose."],
+    (t) => ["Thoughts and", "prayers, " + t.n + "."],
+    (t) => [t.n + "'s strategy:", "hope."],
+    (t) => ["Golf is hard,", "eh " + t.n + "?"],
+    (t) => [t.back + " back. Room", "to grow."],
+    (t) => [t.n + " chose", "violence. Lost."],
+    (t) => ["Brave effort,", t.n + ". No."],
+    (t) => [t.w + "?", "Money well", "spent, " + t.n + "."],
+    (t) => ["Blink twice if", "trapped, " + t.n + "."],
+    (t) => [t.n + " is here for", "the friendships."],
   ];
   const FAR = [
-    (t) => [t.n + ", " + t.back + " back.", "Historic."],
-    (t) => ["Bin it,", t.n + "."],
-    (t) => [t.n + "'s card", "is a crime."],
-    (t) => [t.w + " " + t.wp + ",", t.n + "? Grim."],
-    (t) => [t.n + " has been", "eliminated."],
-    (t) => ["Go home,", t.n + "."],
+    (t) => [t.n + ", " + t.back + " back.", "A tragedy."],
+    (t) => ["Dead man", "walking, " + t.n + "."],
+    (t) => [t.n + "'s card", "needs a priest."],
+    (t) => [t.w + ":", t.wp + "?!", "Seek help."],
+    (t) => ["His Majesty", "averts his eyes."],
     (t) => [t.n + " picked", "with darts."],
-    (t) => ["We've stopped", "watching."],
-    (t) => [t.back + " back.", "Extraordinary."],
+    (t) => ["Delete the", "app, " + t.n + "."],
+    (t) => [t.back + " back.", "World record."],
+    (t) => [t.n + " vs golf:", "golf wins."],
+    (t) => ["Burn the", "card, " + t.n + "."],
+    (t) => [t.n + " is", "decorative now."],
+    (t) => ["Even the gulls", "pity " + t.n + "."],
+    (t) => ["Next year,", t.n + ". Maybe."],
+    (t) => [t.w + "?", t.w + "??"],
+    (t) => ["Legally, " + t.n + ",", "that's a crime."],
+    (t) => ["We buried your", "chances, " + t.n + "."],
   ];
   const any = (a) => a[Math.floor(Math.random() * a.length)];
 
@@ -756,16 +747,6 @@ footer p+p{margin-top:7px}
 
 (function alive() {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  // race plates glide in from where they stood last build
-  document.querySelectorAll(".rp[data-prev]").forEach((el) => {
-    const lane = el.parentElement.clientWidth - 118;
-    el.style.transition = "none";
-    el.style.left = ((+el.dataset.prev) * lane + 5) + "px";
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.style.transition = "";
-      el.style.left = ((+el.dataset.x) * lane + 5) + "px";
-    }));
-  });
   // board rows slide from their previous slot (FLIP)
   const lis = [...document.querySelectorAll(".board li")];
   const moved = lis.some((li, i) => li.dataset.flip !== "" &&
@@ -819,7 +800,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784251078841;
+const built = 1784251641927;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
