@@ -9,9 +9,9 @@
 <meta name="apple-mobile-web-app-title" content="The Pool">
 <title>The 154th Open Championship — Pool</title>
 <meta property="og:title" content="The Open Pool · Royal Birkdale">
-<meta property="og:description" content="Mark −9 leads · Dave 1 back · Bill 3 back">
+<meta property="og:description" content="Mark −10 leads · Dave 2 back · Bill 3 back">
 <meta property="og:type" content="website">
-<meta name="description" content="Mark −9 leads · Dave 1 back · Bill 3 back">
+<meta name="description" content="Mark −10 leads · Dave 2 back · Bill 3 back">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&family=Newsreader:opsz,wght@6..72,300..500&display=swap" rel="stylesheet">
@@ -90,9 +90,11 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 /* He stands at ground level and walks on from off-stage. --flip faces him
    the way he's walking, and the march composes on top of it. */
 .goph{--flip:scaleX(1);position:fixed;left:0;bottom:0;z-index:9;
-  display:flex;align-items:flex-end;gap:4px;
+  display:flex;align-items:flex-end;gap:4px;min-height:74px;
   transform:translateX(-200vw);pointer-events:none}
-.goph.on{pointer-events:auto;cursor:pointer;touch-action:manipulation;
+/* the tap target must not depend on a child's glyph metrics */
+.goph.on,.goph.on *{pointer-events:auto}
+.goph.on{cursor:pointer;touch-action:manipulation;
   -webkit-tap-highlight-color:transparent}
 .goph-guy{font-size:76px;line-height:.94;display:block;min-width:64px;text-align:center;transform:var(--flip);
   filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));
@@ -298,7 +300,7 @@ footer p+p{margin-top:7px}
     </g>
   </svg>
 
-<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li data-flip="0" onclick="go('c-mark')"><span class="pos"><i class="edot" style="--rc:#C77DFF"></i>1</span><span class="pl"><b class="crn">👑</b><span class="ent lead">Mark</span></span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under">−9</span></li><li data-flip="1" onclick="go('c-dave')"><span class="pos"><i class="edot" style="--rc:#4FA3FF"></i>2</span><span class="ent">Dave</span><span class="back">1 back</span><span class="tile under">−8</span></li><li data-flip="2" onclick="go('c-bill')"><span class="pos"><i class="edot" style="--rc:#FF6B57"></i>T3</span><span class="ent">Bill</span><span class="back">3 back</span><span class="tile under">−6</span></li><li data-flip="3" onclick="go('c-phil')"><span class="pos"><i class="edot" style="--rc:#3ECF8E"></i>T3</span><span class="ent">Phil</span><span class="back">3 back</span><span class="tile under">−6</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +2, Fox +2, McIlroy +2, Fitzpatrick +2, Åberg +2</p></div></div></div>
+<div class="boardwrap"><div class="boardcap cond">Leaderboard · The Open</div><div class="board"><ul><li data-flip="0" onclick="go('c-mark')"><span class="pos"><i class="edot" style="--rc:#C77DFF"></i>1</span><span class="pl"><b class="crn">👑</b><span class="ent lead">Mark</span></span><b class="spk s1">✦</b><b class="spk s2">✦</b><span class="back">leader</span><span class="tile under chg">−10</span></li><li data-flip="1" onclick="go('c-dave')"><span class="pos"><i class="edot" style="--rc:#4FA3FF"></i>2</span><span class="ent">Dave</span><span class="back">2 back</span><span class="tile under">−8</span></li><li data-flip="2" onclick="go('c-bill')"><span class="pos"><i class="edot" style="--rc:#FF6B57"></i>3</span><span class="ent">Bill</span><span class="back">3 back</span><span class="tile under chg">−7</span></li><li data-flip="3" onclick="go('c-phil')"><span class="pos"><i class="edot" style="--rc:#3ECF8E"></i>4</span><span class="ent">Phil</span><span class="back">4 back</span><span class="tile under">−6</span></li></ul><div class="bfoot"><p>Projected cut +1 · outside: Rose +5, Clark +4, Fox +2</p></div></div></div>
 
 <h2>Every card, round by round</h2>
 <div class="legend">
@@ -307,7 +309,7 @@ footer p+p{margin-top:7px}
   <span><b class="lg-pen">80</b> missed cut</span>
   <span><i class="chip">T23</i> position · <i class="chip out">T88</i> outside cut</span>
 </div>
-<article id="c-mark"><h3>Mark<span class="under">−9</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Scheffler<i class="chip">T18</i></td><td class="">68</td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Young<i class="chip">T18</i></td><td class="">67</td><td class="proj">71<small>thru 1</small></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="off"><td class="g">Schauffele<i class="chip">T61</i></td><td class="">71</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Åberg<i class="chip out">T89</i></td><td class="">71</td><td class="proj">71<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">DeChambeau<i class="chip">T8</i></td><td class="">67</td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Rahm<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Cantlay<i class="chip">T61</i></td><td class="">71</td><td></td><td class="tp"><span class="over">+1</span></td></tr></tbody></table></article><article id="c-dave"><h3>Dave<span class="under">−8</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Gotterup<i class="chip">T28</i></td><td class="">70</td><td class="proj">69<small>thru 4</small></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Scheffler<i class="chip">T18</i></td><td class="">68</td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">MacIntyre<i class="chip">T8</i></td><td class="">67</td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Åberg<i class="chip out">T89</i></td><td class="">71</td><td class="proj">71<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="off"><td class="g">Clark<i class="chip out">T89</i></td><td class="">73</td><td class="proj">69<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Hatton<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="off"><td class="g">Rose<i class="chip out">T139</i></td><td class="">75</td><td></td><td class="tp"><span class="over">+5</span></td></tr></tbody></table></article><article id="c-bill"><h3>Bill<span class="under">−6</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland<i class="chip">T43</i></td><td class="">70</td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="off"><td class="g">Rose<i class="chip out">T139</i></td><td class="">75</td><td></td><td class="tp"><span class="over">+5</span></td></tr><tr class="on"><td class="g">Scheffler<i class="chip">T18</i></td><td class="">68</td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Smith<i class="chip">T43</i></td><td class="">73</td><td class="proj">67<small>thru 13</small></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Kim<i class="chip">T61</i></td><td class="">70</td><td class="proj">71<small>thru 7</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">Gotterup<i class="chip">T28</i></td><td class="">70</td><td class="proj">69<small>thru 4</small></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Young<i class="chip">T18</i></td><td class="">67</td><td class="proj">71<small>thru 1</small></td><td class="tp"><span class="under">−2</span></td></tr></tbody></table></article><article id="c-phil"><h3>Phil<span class="under">−6</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland<i class="chip">T43</i></td><td class="">70</td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Rose<i class="chip out">T139</i></td><td class="">75</td><td></td><td class="tp"><span class="over">+5</span></td></tr><tr class="on"><td class="g">MacIntyre<i class="chip">T8</i></td><td class="">67</td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fox<i class="chip out">T89</i></td><td class="">72</td><td></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Hatton<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Keefer<i class="chip">T28</i></td><td class="">70</td><td class="proj">69<small>thru 7</small></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Clark<i class="chip out">T89</i></td><td class="">73</td><td class="proj">69<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip out">T89</i></td><td class="">72</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr></tbody></table></article>
+<article id="c-mark"><h3>Mark<span class="under">−10</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Scheffler<i class="chip">T19</i></td><td class="">68</td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Young<i class="chip">T9</i></td><td class="">67</td><td class="proj">70<small>thru 2</small></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Schauffele<i class="chip">T61</i></td><td class="">71</td><td class="proj">70<small>thru 1</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Åberg<i class="chip">T61</i></td><td class="">71</td><td class="proj">70<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">DeChambeau<i class="chip">T9</i></td><td class="">67</td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Rahm<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Cantlay<i class="chip">T61</i></td><td class="">71</td><td></td><td class="tp"><span class="over">+1</span></td></tr></tbody></table></article><article id="c-dave"><h3>Dave<span class="under">−8</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Gotterup<i class="chip">T28</i></td><td class="">70</td><td class="proj">69<small>thru 4</small></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Scheffler<i class="chip">T19</i></td><td class="">68</td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">MacIntyre<i class="chip">T9</i></td><td class="">67</td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Åberg<i class="chip">T61</i></td><td class="">71</td><td class="proj">70<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Clark<i class="chip out">T127</i></td><td class="">73</td><td class="proj">71<small>thru 2</small></td><td class="tp"><span class="over">+4</span></td></tr><tr class="on"><td class="g">Hatton<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Rose<i class="chip out">T139</i></td><td class="">75</td><td></td><td class="tp"><span class="over">+5</span></td></tr></tbody></table></article><article id="c-bill"><h3>Bill<span class="under">−7</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland<i class="chip">T44</i></td><td class="">70</td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Rose<i class="chip out">T139</i></td><td class="">75</td><td></td><td class="tp"><span class="over">+5</span></td></tr><tr class="on"><td class="g">Scheffler<i class="chip">T19</i></td><td class="">68</td><td></td><td class="tp"><span class="under">−2</span></td></tr><tr class="off"><td class="g">Smith<i class="chip">T44</i></td><td class="">73</td><td class="proj">67<small>thru 13</small></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Kim<i class="chip">T61</i></td><td class="">70</td><td class="proj">71<small>thru 8</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">Gotterup<i class="chip">T28</i></td><td class="">70</td><td class="proj">69<small>thru 4</small></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">Young<i class="chip">T9</i></td><td class="">67</td><td class="proj">70<small>thru 2</small></td><td class="tp"><span class="under">−3</span></td></tr></tbody></table></article><article id="c-phil"><h3>Phil<span class="under">−6</span></h3><table><thead><tr><th></th><th>Thu</th><th>Fri</th><th>±</th></tr></thead><tbody><tr class="on"><td class="g">Hovland<i class="chip">T44</i></td><td class="">70</td><td></td><td class="tp"><span class="even">E</span></td></tr><tr class="off"><td class="g">Rose<i class="chip out">T139</i></td><td class="">75</td><td></td><td class="tp"><span class="over">+5</span></td></tr><tr class="on"><td class="g">MacIntyre<i class="chip">T9</i></td><td class="">67</td><td></td><td class="tp"><span class="under">−3</span></td></tr><tr class="off"><td class="g">Fox<i class="chip out">T92</i></td><td class="">72</td><td></td><td class="tp"><span class="over">+2</span></td></tr><tr class="on"><td class="g">Hatton<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr><tr class="on"><td class="g">Keefer<i class="chip">T28</i></td><td class="">70</td><td class="proj">69<small>thru 7</small></td><td class="tp"><span class="under">−1</span></td></tr><tr class="off"><td class="g">Clark<i class="chip out">T127</i></td><td class="">73</td><td class="proj">71<small>thru 2</small></td><td class="tp"><span class="over">+4</span></td></tr><tr class="off"><td class="g">McIlroy<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="off"><td class="g">Fitzpatrick<i class="chip">T61</i></td><td class="">72</td><td class="proj">69<small>thru 2</small></td><td class="tp"><span class="over">+1</span></td></tr><tr class="on"><td class="g">Fleetwood<i class="chip">T28</i></td><td class="">69</td><td></td><td class="tp"><span class="under">−1</span></td></tr></tbody></table></article>
 
 
 
@@ -321,7 +323,7 @@ footer p+p{margin-top:7px}
   who's already in. The gold button fetches the newest board immediately.</p>
 </footer>
 
-<div class="goph" id="goph" aria-hidden="true" data-troll="[{&quot;n&quot;: &quot;Dave&quot;, &quot;back&quot;: 1, &quot;w&quot;: &quot;Gotterup&quot;, &quot;wp&quot;: &quot;\u22121&quot;}, {&quot;n&quot;: &quot;Bill&quot;, &quot;back&quot;: 3, &quot;w&quot;: &quot;Hovland&quot;, &quot;wp&quot;: &quot;E&quot;}, {&quot;n&quot;: &quot;Phil&quot;, &quot;back&quot;: 3, &quot;w&quot;: &quot;Hovland&quot;, &quot;wp&quot;: &quot;E&quot;}]"><b class="goph-guy">💂</b><b class="say" id="say"><i class="spark k1">✦</i><i class="spark k2">✦</i><i class="spark k3">✦</i><span class="say-o"></span><span class="say-f"></span></b></div>
+<div class="goph" id="goph" aria-hidden="true" data-troll="[{&quot;n&quot;: &quot;Dave&quot;, &quot;back&quot;: 2, &quot;w&quot;: &quot;Gotterup&quot;, &quot;wp&quot;: &quot;\u22121&quot;}, {&quot;n&quot;: &quot;Bill&quot;, &quot;back&quot;: 3, &quot;w&quot;: &quot;Hovland&quot;, &quot;wp&quot;: &quot;E&quot;}, {&quot;n&quot;: &quot;Phil&quot;, &quot;back&quot;: 4, &quot;w&quot;: &quot;Hovland&quot;, &quot;wp&quot;: &quot;E&quot;}]"><b class="goph-guy">💂</b><b class="say" id="say"><i class="spark k1">✦</i><i class="spark k2">✦</i><i class="spark k3">✦</i><span class="say-o"></span><span class="say-f"></span></b></div>
 <button class="rf" onclick="freshen()" aria-label="Refresh scores">
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
        stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
@@ -358,27 +360,65 @@ footer p+p{margin-top:7px}
     (t) => [t.n + " smells", "blood. His own."],
     (t) => ["Cute run, " + t.n + ".", "It ends here."],
     (t) => ["History forgets", "runners-up."],
+    (t) => [t.back + " back.", "Still back."],
+    (t) => [t.n + " tastes it.", "It's copper."],
+    (t) => ["Close counts", "in horseshoes."],
+    (t) => [t.n + " peaks now.", "Sadly."],
+    (t) => ["Silver suits", "you, " + t.n + "."],
+    (t) => ["So near, " + t.n + ".", "So permanent."],
+    (t) => ["Hope is cruel,", t.n + "."],
+    (t) => ["A chance, " + t.n + ".", "A small one."],
+    (t) => ["Keep pushing.", "It won't help."],
+    (t) => ["Heel-nipping.", "Very small dog."],
+    (t) => ["One bad round", "from nothing."],
+    (t) => ["Tension.", "For " + t.n + " only."],
+    (t) => [t.n + " smells it.", "Briefly."],
+    (t) => ["Second is not", "a personality."],
+    (t) => [t.n + " is close.", "Close loses."],
+    (t) => ["Almost, " + t.n + ".", "Always almost."],
+    (t) => ["The chase is", "the fun part.", "For us."],
+    (t) => ["A big moment", "for " + t.n + ". No."],
+    (t) => ["So brave, " + t.n + ".", "So doomed."],
+    (t) => [t.back + " back and", "still hoping."],
   ];
   const MID = [
     (t) => [t.n + " paid money", "to feel this."],
     (t) => [t.w + "?", "A bold theory."],
     (t) => [t.n + " backed", t.w + ".", "On purpose."],
     (t) => ["Thoughts and", "prayers, " + t.n + "."],
-    (t) => [t.n + "'s strategy:", "hope."],
+    (t) => ["Strategy:", "hope, " + t.n + "."],
     (t) => ["Golf is hard,", "eh " + t.n + "?"],
     (t) => [t.back + " back. Room", "to grow."],
     (t) => [t.n + " chose", "violence. Lost."],
     (t) => ["Brave effort,", t.n + ". No."],
-    (t) => [t.w + "?", "Money well", "spent, " + t.n + "."],
+    (t) => [t.w + ".", "Money well", "spent, " + t.n + "."],
     (t) => ["Blink twice if", "trapped, " + t.n + "."],
-    (t) => [t.n + " is here for", "the friendships."],
+    (t) => [t.n + " is here", "for the vibes."],
+    (t) => [t.w + "?", "Again?", "Astonishing."],
+    (t) => ["A plan, " + t.n + "?", "A bad one."],
+    (t) => ["Was it a dare,", t.n + "?"],
+    (t) => [t.n + " is in the", "wrong sport."],
+    (t) => ["Somewhere,", t.w, "is sorry."],
+    (t) => ["Field by " + t.back + ".", "Ouch, " + t.n + "."],
+    (t) => ["A masterclass.", "In losing."],
+    (t) => ["Picked hope.", "Hope declined."],
+    (t) => [t.n + "'s method:", "lose slowly."],
+    (t) => [t.w + "?", "Not the issue.", t.n + " is."],
+    (t) => [t.n + " is trying", "his very best."],
+    (t) => ["Bold of " + t.n, "to watch this."],
+    (t) => ["Your best five:", "three, " + t.n + "."],
+    (t) => [t.w, "owes you one,", t.n + "."],
+    (t) => [t.n + " is mid.", "Literally."],
+    (t) => ["Mid-table.", "Fitting, " + t.n + "."],
+    (t) => [t.n + " is fine.", "Just fine."],
+    (t) => ["Adequate, " + t.n + ".", "Truly adequate."],
   ];
   const FAR = [
     (t) => [t.n + ", " + t.back + " back.", "A tragedy."],
     (t) => ["Dead man", "walking, " + t.n + "."],
     (t) => [t.n + "'s card", "needs a priest."],
     (t) => [t.w + ":", t.wp + "?!", "Seek help."],
-    (t) => ["His Majesty", "averts his eyes."],
+    (t) => ["His Majesty", "looks away."],
     (t) => [t.n + " picked", "with darts."],
     (t) => ["Delete the", "app, " + t.n + "."],
     (t) => [t.back + " back.", "World record."],
@@ -390,8 +430,44 @@ footer p+p{margin-top:7px}
     (t) => [t.w + "?", t.w + "??"],
     (t) => ["Legally, " + t.n + ",", "that's a crime."],
     (t) => ["We buried your", "chances, " + t.n + "."],
+    (t) => [t.back + " back.", "Out of four."],
+    (t) => ["The Crown does", "not know " + t.n + "."],
+    (t) => [t.n + "'s picks:", "a hate crime."],
+    (t) => ["Somebody check", "on " + t.n + "."],
+    (t) => [t.n + " plays", "another sport."],
+    (t) => ["Send " + t.n, "to the Tower."],
+    (t) => [t.n + " has been", "struck from", "the record."],
+    (t) => ["A " + t.back + "-stroke", "cry for help."],
+    (t) => [t.w + ".", t.wp + ".", "Astounding."],
+    (t) => [t.n + " should", "take up darts."],
+    (t) => ["This is elder", "abuse, " + t.n + "."],
+    (t) => [t.n + " is why", "we have a cut."],
+    (t) => ["The gulls are", "laughing, " + t.n + "."],
+    (t) => [t.n + ": " + t.back + " back.", "Historic."],
   ];
   const any = (a) => a[Math.floor(Math.random() * a.length)];
+  const shuffle = (a) => {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const x = a[i]; a[i] = a[j]; a[j] = x;
+    }
+    return a;
+  };
+  // Deal from a shuffled bag rather than rolling dice each time: you see all
+  // thirty in a tier before any of them comes round again. That is what makes
+  // it FEEL random — dice repeat, bags don't.
+  const bags = [[], [], []];
+  const needsPick = (f) =>
+    f({n: "x", back: 1, w: "", wp: ""}).join("").indexOf("") >= 0;
+  const drawLine = (tier, t) => {
+    const bank = [CLOSE, MID, FAR][tier];
+    for (let i = 0; i <= bank.length; i++) {
+      if (!bags[tier].length) bags[tier] = shuffle(bank.slice());
+      const f = bags[tier].pop();
+      if (t.w || !needsPick(f)) return f(t);
+    }
+    return bank[0](t);
+  };
 
   // New spot and new tilt every time, but measured rather than guessed:
   // shrink the line until the whole group fits, then pick a left edge that
@@ -441,14 +517,9 @@ footer p+p{margin-top:7px}
 
   const dress = (t) => {
     const tier = t.back <= 3 ? 0 : (t.back <= 9 ? 1 : 2);
-    // lines that name a pick are useless if we don't know one
-    const bank = [CLOSE, MID, FAR][tier].filter(
-      (f) => t.w || f({n: "x", back: 1, w: "", wp: ""}).join("")
-        .indexOf("") < 0);
     const esc = (x) => x.replace(/&/g, "&amp;").replace(/</g, "&lt;");
     const broke = taps >= 4;
-    const lines = broke ? ["Stop that.", "I'm on duty."]
-                        : any(bank.length ? bank : CLOSE)(t);
+    const lines = broke ? ["Stop that.", "I'm on duty."] : drawLine(tier, t);
     if (broke) taps = 0;
     outline.innerHTML = fill.innerHTML =
       lines.map((l) => '<span class="ln">' + esc(l) + "</span>").join("");
@@ -463,7 +534,7 @@ footer p+p{margin-top:7px}
   };
 
   const march = () => {
-    if (document.hidden) return later(20000, 40000);
+    if (document.hidden) return later(15000, 30000);
     let t = any(troll);
     let ti = troll.indexOf(t);
     dress(t);
@@ -487,7 +558,7 @@ footer p+p{margin-top:7px}
         g.classList.remove("marching", "on");
         live = false;
         taps = 0;
-        later(30000, 62000);
+        later(12000, 25000);
       };
     };
 
@@ -508,7 +579,11 @@ footer p+p{margin-top:7px}
 
     // Tap him and he fires a fresh one on the spot. Tap him enough times and
     // the guard finally breaks — which is the entire joke about guards.
-    g.onpointerdown = () => {
+    // Take the poke from whichever event lands. pointerdown and click BOTH
+    // fire for one tap, so a naive time-window de-dupe swallows fast taps —
+    // use a flag instead: once pointerdown proves it works, click stands down.
+    let pointerWorks = false;
+    const poke = () => {
       if (!live) return;
       taps++;
       clearTimeout(holdTimer);
@@ -519,6 +594,8 @@ footer p+p{margin-top:7px}
       speak();
       holdTimer = setTimeout(exit, 9600);
     };
+    g.onpointerdown = () => { pointerWorks = true; poke(); };
+    g.onclick = () => { if (!pointerWorks) poke(); };
   };
 
   document.addEventListener("visibilitychange", () => {
@@ -530,9 +607,9 @@ footer p+p{margin-top:7px}
       g.classList.remove("marching", "on");
       say.classList.remove("show");
       live = false;
-    } else later(15000, 35000);
+    } else later(6000, 14000);
   });
-  later(14000, 26000);        // let the balloons finish first
+  later(5000, 9000);         // turn up while they're still looking
 })();
 
 (function alive() {
@@ -570,7 +647,7 @@ function freshen() {
 }
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784280897169;
+const built = 1784281254890;
 try {
   const prev = +sessionStorage.getItem("prevBuild");
   if (prev) {
