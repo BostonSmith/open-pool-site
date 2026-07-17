@@ -76,15 +76,25 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .empty{font-family:var(--print);font-size:15px;padding:20px 10px;
   color:#6B5410;text-align:center}
 .party{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:8}
-/* The Guard marches up from the bottom-left edge. */
-.goph{position:fixed;left:10px;bottom:0;z-index:9;pointer-events:none;
+/* He stands at ground level and walks on from off-stage. --flip faces him
+   the way he's walking, and the march composes on top of it. */
+.goph{--flip:scaleX(1);position:fixed;left:0;bottom:0;z-index:9;
   display:flex;align-items:flex-end;gap:4px;
-  transform:translateY(118%);
-  transition:transform .5s cubic-bezier(.2,1.5,.45,1)}
-.goph.up{transform:translateY(0)}
-.goph-guy{font-size:76px;line-height:.94;display:block;
+  transform:translateX(-200vw);pointer-events:none}
+.goph.live{pointer-events:auto;cursor:pointer;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent}
+.goph-guy{font-size:76px;line-height:.94;display:block;transform:var(--flip);
   filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));
   padding-bottom:calc(2px + env(safe-area-inset-bottom))}
+.goph.marching .goph-guy{animation:march .36s ease-in-out infinite}
+@keyframes march{
+  0%,100%{transform:var(--flip) translateY(0) rotate(-4deg)}
+  50%{transform:var(--flip) translateY(-7px) rotate(4deg)}}
+.goph.halt .goph-guy{animation:halt .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes halt{
+  0%{transform:var(--flip) translateY(-7px)}
+  60%{transform:var(--flip) translateY(0) scaleY(.9)}
+  100%{transform:var(--flip) translateY(0) scaleY(1)}}
 
 /* Candy-Crush caption: fat dark outline behind, sweet gradient in front,
    springing in with an overshoot. Two stacked layers, because a single
@@ -590,6 +600,7 @@ footer p+p{margin-top:7px}
     g.style.right = "auto";
     g.style.left = PAD + "px";
     g.style.flexDirection = "row";
+    g.style.transform = "translateX(-200vw)";   // measure off-stage
     let fs = 21;
     say.style.fontSize = fs + "px";
     const widest = window.innerWidth - PAD - BTN;
@@ -608,41 +619,100 @@ footer p+p{margin-top:7px}
     say.style.setProperty("--tilt", (Math.random() * 15 - 7.5).toFixed(1) + "deg");
   };
 
-  let timer;
+  let timer, holdTimer, live = false, taps = 0;
   const later = (lo, hi) => {
     clearTimeout(timer);
-    timer = setTimeout(pop, lo + Math.random() * (hi - lo));
+    timer = setTimeout(march, lo + Math.random() * (hi - lo));
   };
-  const pop = () => {
-    if (document.hidden) return later(20000, 40000);
-    const t = any(troll);
+
+  const dress = (t) => {
     const tier = t.back <= 3 ? 0 : (t.back <= 9 ? 1 : 2);
-    // lines that name a pick are useless if we don't know one
     // lines that name a pick are useless if we don't know one
     const bank = [CLOSE, MID, FAR][tier].filter(
       (f) => t.w || f({n: "x", back: 1, w: "", wp: ""}).join("")
         .indexOf("") < 0);
     const esc = (x) => x.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-    const stack = any(bank.length ? bank : CLOSE)(t)
-      .map((l) => '<span class="ln">' + esc(l) + "</span>").join("");
-    outline.innerHTML = stack;
-    fill.innerHTML = stack;
+    const broke = taps >= 4;
+    const lines = broke ? ["Stop that.", "I'm on duty."]
+                        : any(bank.length ? bank : CLOSE)(t);
+    if (broke) taps = 0;
+    outline.innerHTML = fill.innerHTML =
+      lines.map((l) => '<span class="ln">' + esc(l) + "</span>").join("");
     say.classList.remove("t1", "t2");
-    if (tier) say.classList.add("t" + tier);
-    place();
-    g.classList.add("up");
-    setTimeout(() => say.classList.add("show"), 340);   // he lands, then speaks
-    setTimeout(() => {
-      say.classList.remove("show");
-      setTimeout(() => g.classList.remove("up"), 260);
-      later(30000, 62000);
-    }, 9600);
+    if (!broke && tier) say.classList.add("t" + tier);
   };
+
+  const speak = () => {
+    say.classList.remove("show");
+    void say.offsetWidth;              // restart the pop from frame zero
+    say.classList.add("show");
+  };
+
+  const march = () => {
+    if (document.hidden) return later(20000, 40000);
+    let t = any(troll);
+    dress(t);
+    place();                                   // stop mark, tilt, text fitted
+    const stopX = parseFloat(g.style.left) || 0;
+    const total = g.offsetWidth;
+    const fromLeft = Math.random() < 0.5;
+    g.style.setProperty("--flip", fromLeft ? "scaleX(1)" : "scaleX(-1)");
+    const off = (toLeft) =>
+      toLeft ? -(stopX + total + 20) : (window.innerWidth - stopX + 20);
+    const start = off(fromLeft), end = off(!fromLeft);
+
+    const exit = () => {
+      say.classList.remove("show");
+      g.classList.add("marching");
+      const out = g.animate(
+        [{transform: "translateX(0px)"},
+         {transform: "translateX(" + end + "px)"}],
+        {duration: 2100, easing: "cubic-bezier(.5,0,.7,.6)", fill: "forwards"});
+      out.onfinish = () => {
+        g.classList.remove("marching", "live");
+        live = false;
+        taps = 0;
+        later(30000, 62000);
+      };
+    };
+
+    g.style.transform = "translateX(" + start + "px)";
+    g.classList.add("marching", "live");
+    live = true;
+    const inAnim = g.animate(
+      [{transform: "translateX(" + start + "px)"},
+       {transform: "translateX(0px)"}],
+      {duration: 2100, easing: "cubic-bezier(.25,.6,.35,1)", fill: "forwards"});
+    inAnim.onfinish = () => {
+      g.classList.remove("marching");
+      g.classList.add("halt");
+      setTimeout(() => g.classList.remove("halt"), 520);
+      speak();
+      holdTimer = setTimeout(exit, 9600);
+    };
+
+    // Tap him and he fires a fresh one on the spot. Tap him enough times and
+    // the guard finally breaks — which is the entire joke about guards.
+    g.onpointerdown = () => {
+      if (!live) return;
+      taps++;
+      clearTimeout(holdTimer);
+      t = any(troll);
+      dress(t);
+      speak();
+      holdTimer = setTimeout(exit, 9600);
+    };
+  };
+
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       clearTimeout(timer);
-      g.classList.remove("up");
+      clearTimeout(holdTimer);
+      g.getAnimations().forEach((a) => a.cancel());
+      g.style.transform = "translateX(-200vw)";
+      g.classList.remove("marching", "live");
       say.classList.remove("show");
+      live = false;
     } else later(15000, 35000);
   });
   later(14000, 26000);        // let the balloons finish first
@@ -680,7 +750,7 @@ try {
 } catch (e) {}
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784244487118;
+const built = 1784250357463;
 const d = new Date(built);
 document.getElementById("upd-t").textContent =
   d.toLocaleTimeString([], {weekday: "short", hour: "numeric", minute: "2-digit"});
