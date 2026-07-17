@@ -92,9 +92,9 @@ h1{font-family:var(--gothic);font-weight:900;font-stretch:78%;
 .goph{--flip:scaleX(1);position:fixed;left:0;bottom:0;z-index:9;
   display:flex;align-items:flex-end;gap:4px;
   transform:translateX(-200vw);pointer-events:none}
-.goph.live{pointer-events:auto;cursor:pointer;touch-action:manipulation;
+.goph.on{pointer-events:auto;cursor:pointer;touch-action:manipulation;
   -webkit-tap-highlight-color:transparent}
-.goph-guy{font-size:76px;line-height:.94;display:block;transform:var(--flip);
+.goph-guy{font-size:76px;line-height:.94;display:block;min-width:64px;text-align:center;transform:var(--flip);
   filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));
   padding-bottom:calc(2px + env(safe-area-inset-bottom))}
 .goph.marching .goph-guy{animation:march .36s ease-in-out infinite}
@@ -420,6 +420,19 @@ footer p+p{margin-top:7px}
     say.style.setProperty("--tilt", (Math.random() * 15 - 7.5).toFixed(1) + "deg");
   };
 
+  // a tapped-in line can be longer than the one he landed with, and he is
+  // not going to shuffle sideways mid-visit — so shrink it where he stands
+  const fitHere = () => {
+    let fs = 21;
+    say.style.fontSize = fs + "px";
+    const left = parseFloat(g.style.left) || PAD;
+    const widest = window.innerWidth - BTN - left;
+    while (g.offsetWidth > widest && fs > 9) {
+      fs -= 1;
+      say.style.fontSize = fs + "px";
+    }
+  };
+
   let timer, holdTimer, live = false, taps = 0;
   const later = (lo, hi) => {
     clearTimeout(timer);
@@ -452,6 +465,7 @@ footer p+p{margin-top:7px}
   const march = () => {
     if (document.hidden) return later(20000, 40000);
     let t = any(troll);
+    let ti = troll.indexOf(t);
     dress(t);
     place();                                   // stop mark, tilt, text fitted
     const stopX = parseFloat(g.style.left) || 0;
@@ -470,7 +484,7 @@ footer p+p{margin-top:7px}
          {transform: "translateX(" + end + "px)"}],
         {duration: 2100, easing: "cubic-bezier(.5,0,.7,.6)", fill: "forwards"});
       out.onfinish = () => {
-        g.classList.remove("marching", "live");
+        g.classList.remove("marching", "on");
         live = false;
         taps = 0;
         later(30000, 62000);
@@ -478,7 +492,7 @@ footer p+p{margin-top:7px}
     };
 
     g.style.transform = "translateX(" + start + "px)";
-    g.classList.add("marching", "live");
+    g.classList.add("marching", "on");
     live = true;
     const inAnim = g.animate(
       [{transform: "translateX(" + start + "px)"},
@@ -498,8 +512,10 @@ footer p+p{margin-top:7px}
       if (!live) return;
       taps++;
       clearTimeout(holdTimer);
-      t = any(troll);
+      ti = (ti + 1) % troll.length;      // next victim, in order
+      t = troll[ti];
       dress(t);
+      fitHere();
       speak();
       holdTimer = setTimeout(exit, 9600);
     };
@@ -511,7 +527,7 @@ footer p+p{margin-top:7px}
       clearTimeout(holdTimer);
       g.getAnimations().forEach((a) => a.cancel());
       g.style.transform = "translateX(-200vw)";
-      g.classList.remove("marching", "live");
+      g.classList.remove("marching", "on");
       say.classList.remove("show");
       live = false;
     } else later(15000, 35000);
@@ -554,7 +570,7 @@ function freshen() {
 }
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784252046798;
+const built = 1784253146430;
 try {
   const prev = +sessionStorage.getItem("prevBuild");
   if (prev) {
