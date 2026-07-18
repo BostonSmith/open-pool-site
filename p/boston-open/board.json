@@ -1,0 +1,276 @@
+{
+ "name": "Boston's Open pool",
+ "rule": {
+  "lowerWins": true,
+  "countBest": 5,
+  "cutMode": "flat",
+  "cutStrokes": 80
+ },
+ "rule_text": "Everyone picks 10 golfers. Only your best 5 count on total strokes to par, lowest wins. A golfer who misses the cut is charged 80 for Saturday and 80 for Sunday.",
+ "cards": [
+  {
+   "who": "Dave",
+   "to_par": -7,
+   "rows": [
+    {
+     "name": "Chris Gotterup",
+     "to_par": 11,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Scottie Scheffler",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Matt Fitzpatrick",
+     "to_par": 33,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Robert MacIntyre",
+     "to_par": 5,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Tommy Fleetwood",
+     "to_par": 14,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Ludvig Åberg",
+     "to_par": -3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Wyndham Clark",
+     "to_par": 11,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Tyrrell Hatton",
+     "to_par": -8,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Rory McIlroy",
+     "to_par": 10,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Justin Rose",
+     "to_par": 3,
+     "counts": true,
+     "cut": false
+    }
+   ]
+  },
+  {
+   "who": "Mark",
+   "to_par": -2,
+   "rows": [
+    {
+     "name": "Scottie Scheffler",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Matt Fitzpatrick",
+     "to_par": 33,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Tommy Fleetwood",
+     "to_par": 14,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Cameron Young",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Rory McIlroy",
+     "to_par": 10,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Xander Schauffele",
+     "to_par": -1,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Ludvig Åberg",
+     "to_par": -3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Bryson DeChambeau",
+     "to_par": 27,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Jon Rahm",
+     "to_par": 22,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Patrick Cantlay",
+     "to_par": 20,
+     "counts": false,
+     "cut": true
+    }
+   ]
+  },
+  {
+   "who": "Phil",
+   "to_par": 4,
+   "rows": [
+    {
+     "name": "Viktor Hovland",
+     "to_par": 7,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Justin Rose",
+     "to_par": 3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Robert MacIntyre",
+     "to_par": 5,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Ryan Fox",
+     "to_par": 17,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Tyrrell Hatton",
+     "to_par": -8,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Johnny Keefer",
+     "to_par": -3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Wyndham Clark",
+     "to_par": 11,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Rory McIlroy",
+     "to_par": 10,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Matt Fitzpatrick",
+     "to_par": 33,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Tommy Fleetwood",
+     "to_par": 14,
+     "counts": false,
+     "cut": false
+    }
+   ]
+  },
+  {
+   "who": "Bill",
+   "to_par": 8,
+   "rows": [
+    {
+     "name": "Viktor Hovland",
+     "to_par": 7,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Tommy Fleetwood",
+     "to_par": 14,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Matt Fitzpatrick",
+     "to_par": 33,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Justin Rose",
+     "to_par": 3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Scottie Scheffler",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Cameron Smith",
+     "to_par": 6,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Tom Kim",
+     "to_par": 22,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Chris Gotterup",
+     "to_par": 11,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Rory McIlroy",
+     "to_par": 10,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Cameron Young",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+ "name": "The Tuesday Crew",
+ "rule": {
+  "lowerWins": true,
+  "countBest": 4,
+  "cutMode": "excluded"
+ },
+ "rule_text": "Six each. Best 4 count to par. Miss the cut and you're dead — that golfer can't count. Low score wins.",
+ "cards": [
+  {
+   "who": "Ryan",
+   "to_par": -12,
+   "rows": [
+    {
+     "name": "Scottie Scheffler",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Rory McIlroy",
+     "to_par": 10,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Ludvig Åberg",
+     "to_par": -3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Tyrrell Hatton",
+     "to_par": -8,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Justin Rose",
+     "to_par": 3,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Ryan Fox",
+     "to_par": null,
+     "counts": false,
+     "cut": true
+    }
+   ]
+  },
+  {
+   "who": "Tess",
+   "to_par": 7,
+   "rows": [
+    {
+     "name": "Patrick Cantlay",
+     "to_par": null,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Xander Schauffele",
+     "to_par": -1,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Chris Gotterup",
+     "to_par": 11,
+     "counts": false,
+     "cut": false
+    },
+    {
+     "name": "Robert MacIntyre",
+     "to_par": 5,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Cameron Smith",
+     "to_par": 6,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Johnny Keefer",
+     "to_par": -3,
+     "counts": true,
+     "cut": false
+    }
+   ]
+  },
+  {
+   "who": "Casey",
+   "to_par": 17,
+   "rows": [
+    {
+     "name": "Bryson DeChambeau",
+     "to_par": null,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Tommy Fleetwood",
+     "to_par": 14,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Jon Rahm",
+     "to_par": null,
+     "counts": false,
+     "cut": true
+    },
+    {
+     "name": "Cameron Young",
+     "to_par": -4,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Viktor Hovland",
+     "to_par": 7,
+     "counts": true,
+     "cut": false
+    },
+    {
+     "name": "Tom Kim",
+     "to_par": null,
+     "counts": false,
+     "cut": true
+    }
+   ]
+  }
+ ]
+}
