@@ -30,6 +30,8 @@ input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px soli
 .picks button[aria-pressed=true]{background:var(--g);color:var(--slot);border-color:var(--g);font-weight:700}
 .picks .mc{font-size:9px;color:var(--under);margin-left:3px}
 .picks button[aria-pressed=true] .mc{color:#7B2018}
+.find{margin-top:9px;font-size:14px;padding:7px 10px}
+.picks .sc{font-size:9px;opacity:.7;margin-left:3px}
 .count{font-size:11px;color:#4E6B58;margin-top:6px}
 .x{background:none;border:1px solid var(--hair);color:var(--dim);border-radius:3px;
  cursor:pointer;padding:0 11px;font-size:16px}
@@ -80,6 +82,7 @@ opens a link — no account, nothing to download.</p>
 <p class="read ok" id="read"></p>
 
 <label>Who's in, and who'd they take</label>
+<p class="read ok" id="livenote">loading the field…</p>
 <div id="ents"></div>
 <button class="add" id="add">+ add someone</button>
 
@@ -103,9 +106,44 @@ Already running: <a href="../p/boston-open/">Boston's Open pool</a> ·
 <a href="../p/tuesday-crew/">The Tuesday Crew</a></p>
 
 <script>
-const FIELD = {"Chris Gotterup": {"r": [73, 72, 75, 71], "cut": false, "c": "🇺🇸"}, "Scottie Scheffler": {"r": [67, 66, 72, 71], "cut": false, "c": "🇺🇸"}, "Matt Fitzpatrick": {"r": [77, 76], "cut": true, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Robert MacIntyre": {"r": [75, 65, 74, 71], "cut": false, "c": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"}, "Tommy Fleetwood": {"r": [72, 75, 76, 71], "cut": false, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Ludvig Åberg": {"r": [67, 74, 65, 71], "cut": false, "c": "🇸🇪"}, "Wyndham Clark": {"r": [66, 65], "cut": true, "c": "🇺🇸"}, "Tyrrell Hatton": {"r": [65, 68, 68, 71], "cut": false, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Rory McIlroy": {"r": [77, 72, 70, 71], "cut": false, "c": "🇬🇧"}, "Justin Rose": {"r": [68, 75, 69, 71], "cut": false, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Viktor Hovland": {"r": [72, 75, 69, 71], "cut": false, "c": "🇳🇴"}, "Cameron Smith": {"r": [76, 69, 70, 71], "cut": false, "c": "🇦🇺"}, "Tom Kim": {"r": [73, 69], "cut": true, "c": "🇰🇷"}, "Cameron Young": {"r": [65, 66, 74, 71], "cut": false, "c": "🇺🇸"}, "Ryan Fox": {"r": [71, 66], "cut": true, "c": "🇳🇿"}, "Johnny Keefer": {"r": [69, 71, 66, 71], "cut": false, "c": "🇺🇸"}, "Xander Schauffele": {"r": [75, 65, 68, 71], "cut": false, "c": "🇺🇸"}, "Bryson DeChambeau": {"r": [71, 76], "cut": true, "c": "🇺🇸"}, "Jon Rahm": {"r": [71, 71], "cut": true, "c": "🇪🇸"}, "Patrick Cantlay": {"r": [66, 74], "cut": true, "c": "🇺🇸"}};
-const NAMES = Object.keys(FIELD);
-const PAR = 70;
+let FIELD = {}, NAMES = [], TOURNEY = null, PAR = 70;
+
+/* The field is LIVE. It comes from field.json, which the same build that runs
+   the Open board publishes every few minutes at ZERO extra API cost. So this
+   page always offers the real field at the real scores for whatever tournament
+   is running — not twenty names baked in last Friday. */
+const FLAGS = {"UNITED STATES":"\u{1F1FA}\u{1F1F8}",
+ "ENGLAND":"\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}",
+ "SCOTLAND":"\u{1F3F4}\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}",
+ "NORTHERN IRELAND":"\u{1F1EC}\u{1F1E7}","IRELAND":"\u{1F1EE}\u{1F1EA}",
+ "SPAIN":"\u{1F1EA}\u{1F1F8}","NORWAY":"\u{1F1F3}\u{1F1F4}","SWEDEN":"\u{1F1F8}\u{1F1EA}",
+ "AUSTRALIA":"\u{1F1E6}\u{1F1FA}","NEW ZEALAND":"\u{1F1F3}\u{1F1FF}",
+ "SOUTH KOREA":"\u{1F1F0}\u{1F1F7}","SOUTH AFRICA":"\u{1F1FF}\u{1F1E6}",
+ "JAPAN":"\u{1F1EF}\u{1F1F5}","CANADA":"\u{1F1E8}\u{1F1E6}","FRANCE":"\u{1F1EB}\u{1F1F7}",
+ "GERMANY":"\u{1F1E9}\u{1F1EA}","ITALY":"\u{1F1EE}\u{1F1F9}","DENMARK":"\u{1F1E9}\u{1F1F0}",
+ "ARGENTINA":"\u{1F1E6}\u{1F1F7}","CHILE":"\u{1F1E8}\u{1F1F1}","MEXICO":"\u{1F1F2}\u{1F1FD}",
+ "AUSTRIA":"\u{1F1E6}\u{1F1F9}","BELGIUM":"\u{1F1E7}\u{1F1EA}","CHINA":"\u{1F1E8}\u{1F1F3}",
+ "TAIWAN":"\u{1F1F9}\u{1F1FC}","THAILAND":"\u{1F1F9}\u{1F1ED}","FINLAND":"\u{1F1EB}\u{1F1EE}"};
+const flag = c => FLAGS[(c||"").toUpperCase()] || "";
+
+async function loadField(){
+  const res = await fetch("../field.json", {cache:"no-store"});
+  if(!res.ok) throw new Error("field " + res.status);
+  const d = await res.json();
+  TOURNEY = d.tournament; PAR = d.tournament.par || 70;
+  FIELD = {};
+  for(const p of d.players)
+    FIELD[p.name] = {r:p.rounds||[], cut:!!p.cut, c:flag(p.country),
+                     score:p.score, pos:p.position, thru:p.thru};
+  NAMES = d.players.map(p=>p.name);
+  const ago = Math.max(0, Math.round((Date.now()/1000 - d.updated)/60));
+  document.querySelector(".eyebrow").textContent =
+    d.tournament.name + " \u00b7 " + d.tournament.venue;
+  document.getElementById("livenote").textContent =
+    NAMES.length + " in the field \u00b7 scores from " +
+    (ago < 1 ? "just now" : ago + " min ago") +
+    (d.cutline != null ? " \u00b7 cut " + (d.cutline>0?"+":"") + d.cutline : "");
+}
 const HUES = ["#4FA3FF","#FF6B57","#3ECF8E","#C77DFF","#FFB01F","#FF6BC1","#5BE39A","#7CA9FF"];
 const last = n => n.startsWith("Cameron ") ? n.split(" ")[1] : n.split(" ").slice(-1)[0];
 const fmt = n => n===0 ? "E" : n>0 ? "+"+n : "\u2212"+(-n);
@@ -136,18 +174,26 @@ const ruleOK = s => Number.isInteger(s.countBest)&&s.countBest>=1&&s.countBest<=
 const cutWords = r => r.cutMode==="excluded" ? "cut men can\u2019t count"
   : r.cutMode==="worstInField" ? "cut = worst man standing" : "cut = "+r.cutStrokes+" a round";
 
-let ents = [{who:"",picks:[]},{who:"",picks:[]}];
+let ents = [{who:"",picks:[],q:""},{who:"",picks:[],q:""}];
+function shown(i){
+  const q=(ents[i].q||"").toLowerCase().trim();
+  const mine = NAMES.filter(n=>ents[i].picks.includes(n));
+  if(!q) return [...mine, ...NAMES.filter(n=>!ents[i].picks.includes(n)).slice(0,24)];
+  return NAMES.filter(n=>n.toLowerCase().includes(q)).slice(0,40);
+}
+function filter(i,v){ ents[i].q=v; drawPicks(i); }
 const $ = id => document.getElementById(id);
 
 function drawEnts(){
   $("ents").innerHTML = ents.map((e,i)=>`
-    <div class="ent" style="--rc:${HUES[i%HUES.length]}">
+    <div class="ent" id="ent${i}" style="--rc:${HUES[i%HUES.length]}">
       <div class="top">
         <input value="${e.who.replace(/"/g,'&quot;')}" placeholder="Player ${i+1}"
           oninput="ents[${i}].who=this.value" autocomplete="off">
         ${ents.length>2?`<button class="x" onclick="ents.splice(${i},1);drawEnts()" aria-label="remove">×</button>`:""}
       </div>
-      <div class="picks">${NAMES.map(g=>`
+      <input class="find" placeholder="find a golfer" oninput="filter(${i},this.value)" autocomplete="off">
+      <div class="picks">${shown(i).map(g=>`
         <button aria-pressed="${e.picks.includes(g)}" onclick="toggle(${i},'${g.replace(/'/g,"\\'")}')">
           ${FIELD[g].c} ${last(g)}${FIELD[g].cut?'<span class="mc">MC</span>':''}
         </button>`).join("")}</div>
@@ -157,9 +203,19 @@ function drawEnts(){
 function toggle(i,g){
   const p=ents[i].picks;
   ents[i].picks = p.includes(g) ? p.filter(x=>x!==g) : [...p,g];
-  drawEnts();
+  drawPicks(i);
 }
-$("add").onclick = () => { ents.push({who:"",picks:[]}); drawEnts(); };
+function drawPicks(i){
+  const box=document.querySelector("#ent"+i+" .picks");
+  box.innerHTML = shown(i).map(g=>
+    '<button aria-pressed="'+ents[i].picks.includes(g)+'" onclick="toggle('+i+',\''+g.replace(/'/g,"\\'")+'\')">'
+    + FIELD[g].c + " " + last(g)
+    + (FIELD[g].cut ? '<span class="mc">MC</span>'
+       : (FIELD[g].score!=null ? '<span class="sc">'+fmt(FIELD[g].score)+'</span>' : ''))
+    + '</button>').join("");
+  document.querySelector("#ent"+i+" .count").textContent = ents[i].picks.length + " picked";
+}
+$("add").onclick = () => { ents.push({who:"",picks:[],q:""}); drawEnts(); };
 
 function showRead(){
   const s=readRule($("rl").value), el=$("read");
@@ -176,8 +232,8 @@ function showRead(){
 $("rl").oninput = showRead;
 
 function build(spec, people){
-  const worst = Math.max(...NAMES.filter(n=>!FIELD[n].cut)
-    .map(n=>FIELD[n].r.reduce((a,b)=>a+b,0)-PAR*4));
+  const worst = Math.max(...NAMES.filter(n=>!FIELD[n].cut && FIELD[n].score!=null)
+    .map(n=>FIELD[n].score));
   const cards = people.map((e,i)=>{
     const rows = e.picks.map(n=>{
       const g=FIELD[n]; let tp;
@@ -185,7 +241,7 @@ function build(spec, people){
         if(spec.cutMode==="flat"){const r=[...g.r];while(r.length<4)r.push(spec.cutStrokes);
           tp=r.reduce((a,b)=>a+b,0)-PAR*4;}
         else if(spec.cutMode==="worstInField")tp=worst; else tp=null;
-      } else tp=g.r.reduce((a,b)=>a+b,0)-PAR*g.r.length;
+      } else tp = g.score!=null ? g.score : (g.r.length ? g.r.reduce((a,b)=>a+b,0)-PAR*g.r.length : null);
       return {name:n,toPar:tp,counts:false};
     });
     const el=rows.filter(r=>r.toPar!==null);
@@ -243,6 +299,11 @@ $("go").onclick = () => {
   $("out").scrollIntoView({behavior:"smooth",block:"start"});
 };
 
-drawEnts(); showRead();
+showRead();
+loadField().then(drawEnts).catch(() => {
+  const n = document.getElementById("livenote");
+  n.className = "read no";
+  n.textContent = "Can\u2019t reach the live field right now \u2014 try again in a minute.";
+});
 </script>
 </body></html>
