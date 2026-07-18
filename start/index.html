@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Start a pool — your rules, your board</title>
+<style>
+:root{--g:#E6B31E;--slot:#0A1C13;--cream:#F2F0E6;--under:#FF5A47;--dim:#9BB89B;
+ --card:#0E2418;--hair:#2A4436}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:560px;padding:26px 16px 60px;background:#0A1A11;color:var(--cream);
+ font-family:'Helvetica Neue',Inter,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+.eyebrow{font-family:Georgia,serif;font-style:italic;color:var(--dim);font-size:14px;margin:0}
+h1{font-size:clamp(30px,8vw,46px);font-weight:900;line-height:.9;letter-spacing:-.02em;
+ text-transform:uppercase;margin:5px 0 10px}
+h1 span{color:var(--g)}
+.lede{color:var(--dim);font-size:15px;line-height:1.55;margin:0 0 26px}
+label{display:block;font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+ color:var(--dim);margin:22px 0 6px}
+input,textarea{width:100%;background:var(--card);color:var(--cream);border:1px solid var(--hair);
+ border-radius:3px;padding:11px 13px;font-size:16px;font-family:inherit}
+textarea{font-family:Georgia,serif;line-height:1.5;border-left:3px solid var(--g);resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+::placeholder{color:#4E6B58}
+.read{font-family:Georgia,serif;font-style:italic;font-size:12.5px;margin:7px 0 0;line-height:1.5}
+.ok{color:var(--dim)}.no{color:var(--under)}
+.ent{background:var(--card);border:1px solid var(--hair);border-left:3px solid var(--rc);
+ border-radius:4px;padding:11px;margin-bottom:8px}
+.ent .top{display:flex;gap:8px}
+.picks{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.picks button{border:1px solid var(--hair);background:none;color:var(--dim);border-radius:3px;
+ padding:3px 6px;font-size:11px;cursor:pointer}
+.picks button[aria-pressed=true]{background:var(--g);color:var(--slot);border-color:var(--g);font-weight:700}
+.picks .mc{font-size:9px;color:var(--under);margin-left:3px}
+.picks button[aria-pressed=true] .mc{color:#7B2018}
+.count{font-size:11px;color:#4E6B58;margin-top:6px}
+.x{background:none;border:1px solid var(--hair);color:var(--dim);border-radius:3px;
+ cursor:pointer;padding:0 11px;font-size:16px}
+.add{background:none;border:1px dashed var(--hair);color:var(--dim);border-radius:3px;
+ padding:9px 14px;font-size:12px;cursor:pointer;width:100%}
+.go{margin-top:18px;background:var(--g);color:var(--slot);border:none;border-radius:3px;
+ padding:14px 22px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+ cursor:pointer;width:100%}
+.err{color:var(--under);font-size:14px;margin-top:10px;line-height:1.5}
+.cap{background:var(--slot);color:var(--g);text-align:center;padding:9px 0;font-size:12px;
+ font-weight:800;letter-spacing:.3em;margin-top:30px}
+.board{background:var(--g);padding:18px 10px 12px}
+.board ul{list-style:none;margin:0;padding:0}
+.board li{display:flex;align-items:center;gap:10px;padding:7px 2px;animation:drop .36s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes drop{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.board li{animation:none}}
+.pos{color:rgba(12,35,24,.4);font-weight:800;font-size:15px;width:13px}
+.pl{position:relative;flex-shrink:0}
+.crn{position:absolute;left:-8px;bottom:calc(100% - 6px);font-size:22px;transform:rotate(-24deg)}
+.plate{display:block;background:var(--slot);color:var(--g);font-weight:900;font-size:18px;
+ letter-spacing:.08em;padding:7px 12px 6px;box-shadow:0 8px 14px rgba(10,20,0,.45);
+ border-left:3px solid var(--rc)}
+.sp{flex:1}
+.back{font-family:Georgia,serif;font-style:italic;font-size:13px;color:rgba(12,35,24,.62)}
+.tile{background:var(--slot);font-weight:900;font-size:17px;padding:7px 11px;min-width:36px;text-align:center}
+.under{color:var(--under)}.over{color:var(--cream)}
+.foot{margin:10px 4px 0;padding-top:8px;border-top:1px solid rgba(12,35,24,.16);
+ font-family:Georgia,serif;font-style:italic;font-size:12.5px;color:rgba(12,35,24,.66);text-align:center}
+.pay{margin-top:16px;background:var(--card);border:1px solid var(--hair);border-left:3px solid var(--g);
+ border-radius:4px;padding:14px}
+.pay b{color:var(--g)}
+.pay p{margin:6px 0 0;color:var(--dim);font-size:13px;line-height:1.6}
+.live{color:var(--dim);font-size:12px;margin-top:26px;font-family:Georgia,serif;font-style:italic;line-height:1.7}
+.live a{color:var(--g)}
+</style></head><body>
+
+<p class="eyebrow">The 154th Open Championship · Royal Birkdale</p>
+<h1>Your rules.<br><span>Your board.</span></h1>
+<p class="lede">Every pool has a house rule no site supports. Write yours the way
+you'd say it out loud, add who's in, and the board is yours. Everyone else just
+opens a link — no account, nothing to download.</p>
+
+<label for="nm">What's it called</label>
+<input id="nm" placeholder="The Thursday Crew" autocomplete="off">
+
+<label for="rl">How does it score</label>
+<textarea id="rl" rows="3">Everyone picks 10 golfers. Only your best 5 count on total strokes to par, lowest wins. A golfer who misses the cut is charged 80 for Saturday and 80 for Sunday.</textarea>
+<p class="read ok" id="read"></p>
+
+<label>Who's in, and who'd they take</label>
+<div id="ents"></div>
+<button class="add" id="add">+ add someone</button>
+
+<button class="go" id="go">Build the board</button>
+<p class="err" id="err" hidden></p>
+
+<div id="out" hidden>
+  <div class="cap">LEADERBOARD</div>
+  <div class="board"><ul id="rows"></ul><p class="foot" id="rule2"></p></div>
+  <div class="pay">
+    <b>That's your board.</b>
+    <p id="paycopy">Live for the whole championship at its own link, updating
+    every few minutes on its own. $8 — the people in your pool never pay
+    anything and never make an account.</p>
+  </div>
+</div>
+
+<p class="live">Real field, real scores, Royal Birkdale. Try
+“best 3 count, cut men are dead” — the winner changes.<br>
+Already running: <a href="../p/boston-open/">Boston's Open pool</a> ·
+<a href="../p/tuesday-crew/">The Tuesday Crew</a></p>
+
+<script>
+const FIELD = {"Chris Gotterup": {"r": [73, 72, 75, 71], "cut": false, "c": "🇺🇸"}, "Scottie Scheffler": {"r": [67, 66, 72, 71], "cut": false, "c": "🇺🇸"}, "Matt Fitzpatrick": {"r": [77, 76], "cut": true, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Robert MacIntyre": {"r": [75, 65, 74, 71], "cut": false, "c": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"}, "Tommy Fleetwood": {"r": [72, 75, 76, 71], "cut": false, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Ludvig Åberg": {"r": [67, 74, 65, 71], "cut": false, "c": "🇸🇪"}, "Wyndham Clark": {"r": [66, 65], "cut": true, "c": "🇺🇸"}, "Tyrrell Hatton": {"r": [65, 68, 68, 71], "cut": false, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Rory McIlroy": {"r": [77, 72, 70, 71], "cut": false, "c": "🇬🇧"}, "Justin Rose": {"r": [68, 75, 69, 71], "cut": false, "c": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, "Viktor Hovland": {"r": [72, 75, 69, 71], "cut": false, "c": "🇳🇴"}, "Cameron Smith": {"r": [76, 69, 70, 71], "cut": false, "c": "🇦🇺"}, "Tom Kim": {"r": [73, 69], "cut": true, "c": "🇰🇷"}, "Cameron Young": {"r": [65, 66, 74, 71], "cut": false, "c": "🇺🇸"}, "Ryan Fox": {"r": [71, 66], "cut": true, "c": "🇳🇿"}, "Johnny Keefer": {"r": [69, 71, 66, 71], "cut": false, "c": "🇺🇸"}, "Xander Schauffele": {"r": [75, 65, 68, 71], "cut": false, "c": "🇺🇸"}, "Bryson DeChambeau": {"r": [71, 76], "cut": true, "c": "🇺🇸"}, "Jon Rahm": {"r": [71, 71], "cut": true, "c": "🇪🇸"}, "Patrick Cantlay": {"r": [66, 74], "cut": true, "c": "🇺🇸"}};
+const NAMES = Object.keys(FIELD);
+const PAR = 70;
+const HUES = ["#4FA3FF","#FF6B57","#3ECF8E","#C77DFF","#FFB01F","#FF6BC1","#5BE39A","#7CA9FF"];
+const last = n => n.startsWith("Cameron ") ? n.split(" ")[1] : n.split(" ").slice(-1)[0];
+const fmt = n => n===0 ? "E" : n>0 ? "+"+n : "\u2212"+(-n);
+
+const W = {one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12};
+const num = v => v==null ? null : (W[v] ?? (/^\d+$/.test(v) ? +v : null));
+function readRule(t){
+  const s=(t||"").toLowerCase();
+  const spec={lowerWins:!/highest|high score wins|most points/.test(s)};
+  const m=s.match(/best (\w+)/)||s.match(/only your (\w+)/)||s.match(/count your (\w+)/);
+  if(m)spec.countBest=num(m[1]);
+  if(/all ten|all 10|all of them count|all count|everyone counts/.test(s))spec.countBest=10;
+  const d=s.match(/drop (?:your |the )?(\w+) worst/), p=s.match(/(?:picks?|takes?|draft) (\w+)/);
+  if(d&&p&&num(p[1])&&num(d[1]))spec.countBest=num(p[1])-num(d[1]);
+  if(/dead|can'?t count|cannot count|excluded|doesn'?t count/.test(s))spec.cutMode="excluded";
+  else if(/worst/.test(s)&&/(field|surviv|standing|remaining)/.test(s))spec.cutMode="worstInField";
+  else{
+    spec.cutMode="flat";
+    const o=s.match(/(\d+)\s*(?:strokes?\s*)?over par/);
+    const f=s.match(/charged (\d+)|is (\d+) for|counts? as (?:an? )?(\d+)|missed cut is (\d+)|score of (\d+)/);
+    if(o)spec.cutStrokes=PAR+ +o[1];
+    else if(f)spec.cutStrokes=+f.slice(1).find(Boolean);
+  }
+  return spec;
+}
+const ruleOK = s => Number.isInteger(s.countBest)&&s.countBest>=1&&s.countBest<=12&&
+  s.cutMode&&(s.cutMode!=="flat"||Number.isInteger(s.cutStrokes));
+const cutWords = r => r.cutMode==="excluded" ? "cut men can\u2019t count"
+  : r.cutMode==="worstInField" ? "cut = worst man standing" : "cut = "+r.cutStrokes+" a round";
+
+let ents = [{who:"",picks:[]},{who:"",picks:[]}];
+const $ = id => document.getElementById(id);
+
+function drawEnts(){
+  $("ents").innerHTML = ents.map((e,i)=>`
+    <div class="ent" style="--rc:${HUES[i%HUES.length]}">
+      <div class="top">
+        <input value="${e.who.replace(/"/g,'&quot;')}" placeholder="Player ${i+1}"
+          oninput="ents[${i}].who=this.value" autocomplete="off">
+        ${ents.length>2?`<button class="x" onclick="ents.splice(${i},1);drawEnts()" aria-label="remove">×</button>`:""}
+      </div>
+      <div class="picks">${NAMES.map(g=>`
+        <button aria-pressed="${e.picks.includes(g)}" onclick="toggle(${i},'${g.replace(/'/g,"\\'")}')">
+          ${FIELD[g].c} ${last(g)}${FIELD[g].cut?'<span class="mc">MC</span>':''}
+        </button>`).join("")}</div>
+      <div class="count">${e.picks.length} picked</div>
+    </div>`).join("");
+}
+function toggle(i,g){
+  const p=ents[i].picks;
+  ents[i].picks = p.includes(g) ? p.filter(x=>x!==g) : [...p,g];
+  drawEnts();
+}
+$("add").onclick = () => { ents.push({who:"",picks:[]}); drawEnts(); };
+
+function showRead(){
+  const s=readRule($("rl").value), el=$("read");
+  if(ruleOK(s)){
+    el.className="read ok";
+    el.textContent=`Read as: best ${s.countBest} count \u00b7 ${s.lowerWins?"low wins":"high wins"} \u00b7 ${cutWords(s)}`;
+  }else{
+    el.className="read no";
+    el.textContent = !Number.isInteger(s.countBest)
+      ? "Say how many count \u2014 e.g. \u201cbest 5 count\u201d."
+      : "Say what a missed cut costs \u2014 e.g. \u201ca missed cut is 80 a round\u201d.";
+  }
+}
+$("rl").oninput = showRead;
+
+function build(spec, people){
+  const worst = Math.max(...NAMES.filter(n=>!FIELD[n].cut)
+    .map(n=>FIELD[n].r.reduce((a,b)=>a+b,0)-PAR*4));
+  const cards = people.map((e,i)=>{
+    const rows = e.picks.map(n=>{
+      const g=FIELD[n]; let tp;
+      if(g.cut){
+        if(spec.cutMode==="flat"){const r=[...g.r];while(r.length<4)r.push(spec.cutStrokes);
+          tp=r.reduce((a,b)=>a+b,0)-PAR*4;}
+        else if(spec.cutMode==="worstInField")tp=worst; else tp=null;
+      } else tp=g.r.reduce((a,b)=>a+b,0)-PAR*g.r.length;
+      return {name:n,toPar:tp,counts:false};
+    });
+    const el=rows.filter(r=>r.toPar!==null);
+    el.sort((a,b)=>spec.lowerWins?a.toPar-b.toPar:b.toPar-a.toPar);
+    el.slice(0,spec.countBest).forEach(r=>r.counts=true);
+    const c=rows.filter(r=>r.counts);
+    return {who:e.who,hue:HUES[i%HUES.length],rows,
+      total:c.reduce((a,r)=>a+r.toPar,0),n:c.length};
+  });
+  cards.sort((a,b)=>spec.lowerWins?a.total-b.total:b.total-a.total);
+  return cards;
+}
+function verify(spec,cards){
+  for(const c of cards){
+    const pool=c.rows.filter(r=>r.toPar!==null).map(r=>r.toPar).sort((a,b)=>a-b);
+    if(!pool.length) return `${c.who} has nobody who can score`;
+    if(c.n!==Math.min(spec.countBest,pool.length)) return `${c.who}'s card counted ${c.n}, not ${spec.countBest}`;
+    if(pool.length>=spec.countBest){
+      const best=spec.lowerWins?pool.slice(0,spec.countBest).reduce((a,b)=>a+b,0)
+        :pool.slice(-spec.countBest).reduce((a,b)=>a+b,0);
+      if(c.total!==best) return `${c.who}'s best ${spec.countBest} came out wrong`;
+    }
+  }
+  return null;
+}
+
+$("go").onclick = () => {
+  const err=$("err"); err.hidden=true; $("out").hidden=true;
+  const fail = m => { err.textContent=m; err.hidden=false; };
+  const name=$("nm").value.trim();
+  if(!name) return fail("Give the pool a name.");
+  const spec=readRule($("rl").value);
+  if(!ruleOK(spec)) return fail(!Number.isInteger(spec.countBest)
+    ? "Couldn\u2019t tell how many golfers count. Try \u201cbest 5 count\u201d."
+    : "Couldn\u2019t tell what a missed cut costs. Try \u201ca missed cut is 80 a round\u201d.");
+  const people=ents.filter(e=>e.who.trim()&&e.picks.length);
+  if(people.length<2) return fail("Add at least two people with picks.");
+  const short=people.find(e=>e.picks.length<spec.countBest);
+  if(short) return fail(`${short.who} has ${short.picks.length} picks but the rule counts ${spec.countBest}.`);
+  const cards=build(spec,people);
+  const bad=verify(spec,cards);
+  if(bad) return fail(bad);
+
+  $("rows").innerHTML = cards.map((c,i)=>`
+    <li style="animation-delay:${i*70}ms">
+      <span class="pos">${i+1}</span>
+      <span class="pl">${i===0?'<b class="crn">\u{1F451}</b>':''}
+        <span class="plate" style="--rc:${c.hue}">${c.who.toUpperCase()}</span></span>
+      <span class="sp"></span>
+      <span class="back">${i===0?"winner":Math.abs(c.total-cards[0].total)+" back"}</span>
+      <span class="tile ${c.total<0?"under":"over"}">${fmt(c.total)}</span>
+    </li>`).join("");
+  $("rule2").textContent = `Best ${spec.countBest} count \u00b7 ${cutWords(spec)}`;
+  $("out").hidden=false;
+  $("out").scrollIntoView({behavior:"smooth",block:"start"});
+};
+
+drawEnts(); showRead();
+</script>
+</body></html>
