@@ -483,9 +483,9 @@ footer p+p{margin-top:7px}
 </style></head><body>
 
 <div class="hero">
-<div class="sky" aria-hidden="true"><i class="sun sun-full"></i></div>
+<div class="sky" aria-hidden="true"><div class="clouds"><i class="cloud" style="top:8%;width:76px;height:28px;opacity:0.26;animation-duration:30.0s;animation-delay:-0.0s"><svg viewBox="0 0 220 84" preserveAspectRatio="none"><path d="M30,66 a22,22 0 0,1 4,-42 a30,30 0 0,1 52,-16 a26,26 0 0,1 44,10 a24,24 0 0,1 40,20 a20,20 0 0,1 -6,28 Z"/></svg></i><i class="cloud" style="top:30%;width:104px;height:36px;opacity:0.44;animation-duration:19.4s;animation-delay:-3.3s"><svg viewBox="0 0 220 84" preserveAspectRatio="none"><path d="M22,68 a26,26 0 0,1 10,-44 a34,34 0 0,1 62,-12 a22,22 0 0,1 36,6 a28,28 0 0,1 52,22 a22,22 0 0,1 -10,28 Z"/></svg></i><i class="cloud" style="top:39%;width:104px;height:36px;opacity:0.44;animation-duration:25.2s;animation-delay:-16.9s"><svg viewBox="0 0 220 84" preserveAspectRatio="none"><path d="M34,70 a20,20 0 0,1 -2,-36 a28,28 0 0,1 46,-20 a32,32 0 0,1 58,14 a22,22 0 0,1 32,18 a18,18 0 0,1 -8,24 Z"/></svg></i><i class="cloud" style="top:52%;width:132px;height:44px;opacity:0.62;animation-duration:14.3s;animation-delay:-4.9s"><svg viewBox="0 0 220 84" preserveAspectRatio="none"><path d="M34,70 a20,20 0 0,1 -2,-36 a28,28 0 0,1 46,-20 a32,32 0 0,1 58,14 a22,22 0 0,1 32,18 a18,18 0 0,1 -8,24 Z"/></svg></i></div><i class="sun sun-soft"></i></div>
 <div class="top">
-<div class="wxb" aria-label="conditions"><i class="wxb-sky">☀️</i><b>69°</b><u class="wx-w">10 mph NW</u></div>
+<div class="wxb" aria-label="conditions"><i class="wxb-sky">⛅</i><b>59°</b><u class="wx-w">4 mph W</u></div>
   <p class="eyebrow">The 154th Open Championship</p>
   <h1>Royal Birkdale</h1>
   <p class="meta">July 16-19, 2026 &middot; best 5 of
@@ -502,7 +502,7 @@ footer p+p{margin-top:7px}
     </g>
     <g>
       <line x1="292" y1="36" x2="292" y2="6" stroke="var(--inkline)" stroke-width="2"/>
-      <path d="M292,9.0 L301.4,18.0 L292,21.0 Z" fill="#E6B31E" stroke="var(--inkline)" stroke-width="1"><title>10 mph NW</title></path>
+      <path d="M292,9.9 L302.1,19.8 L292,21.9 Z" fill="#E6B31E" stroke="var(--inkline)" stroke-width="1"><title>4 mph W</title></path>
     </g>
   </svg>
 </div>
@@ -958,7 +958,7 @@ function freshen() {
 }
 // Refresh when you come back to it, or while it's sitting idle at the top.
 // Never while someone is reading a card.
-const built = 1784362274946;
+const built = 1784362826908;
 try {
   const prev = +sessionStorage.getItem("prevBuild");
   if (prev) {
